@@ -15,7 +15,11 @@ import {
 } from "lucide-react";
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(() => {
+    const stored = localStorage.getItem("discord_user");
+    return stored ? JSON.parse(stored) : null;
+  });
+  const isLoggedIn = !!user;
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const heroImages = [
@@ -32,10 +36,90 @@ const App = () => {
     return () => clearInterval(timer);
   }, [heroImages.length]);
 
-  const user = {
-    name: "Alex_Steve",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Alex",
-    discriminator: "#1234",
+  const handleLogout = () => {
+    localStorage.removeItem("discord_user");
+    setUser(null);
+  };
+
+  const appBaseUrl = import.meta.env.VITE_APP_BASE_URL || window.location.origin;
+
+  // OAuth callback handling
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const code = url.searchParams.get("code");
+    if (!code) return;
+
+    // prevent duplicate calls
+    url.searchParams.delete("code");
+    url.searchParams.delete("state");
+    const cleanUrl = url.toString();
+    window.history.replaceState({}, "", cleanUrl);
+
+    (async () => {
+      try {
+        const res = await fetch("/discord-oauth", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ code }),
+        });
+        if (!res.ok) {
+          console.error("OAuth exchange failed", await res.text());
+          return;
+        }
+        const data = await res.json();
+        const discordUser = {
+          id: data.user.id,
+          name: data.user.username,
+          discriminator: data.user.discriminator,
+          avatar: data.user.avatar
+            ? `https://cdn.discordapp.com/avatars/${data.user.id}/${data.user.avatar}.png`
+            : null,
+        };
+        localStorage.setItem("discord_user", JSON.stringify(discordUser));
+        setUser(discordUser);
+      } catch (err) {
+        console.error("OAuth error", err);
+      }
+    })();
+  }, []);
+
+  const beginDiscordLogin = () => {
+    const redirectUri = `${appBaseUrl}/auth/callback`;
+    const params = new URLSearchParams({
+      client_id: import.meta.env.VITE_DISCORD_CLIENT_ID || "",
+      response_type: "code",
+      scope: "identify guilds.join",
+      redirect_uri: redirectUri,
+      prompt: "consent",
+    });
+    window.location.href = `https://discord.com/oauth2/authorize?${params.toString()}`;
+  };
+
+  const startCheckout = async (priceType) => {
+    if (!user) {
+      beginDiscordLogin();
+      return;
+    }
+    try {
+      const res = await fetch("/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          priceType,
+          discord_user_id: user.id,
+        }),
+      });
+      if (!res.ok) {
+        console.error("Checkout create failed", await res.text());
+        return;
+      }
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (err) {
+      console.error("Checkout error", err);
+    }
   };
 
   const scrollToTop = () => {
@@ -108,7 +192,7 @@ const App = () => {
             {!isLoggedIn ? (
               <div className="flex flex-col items-end">
                 <motion.button
-                  onClick={() => setIsLoggedIn(true)}
+                  onClick={beginDiscordLogin}
                   whileHover={{ scale: 1.05, backgroundColor: "#4752C4" }}
                   whileTap={{ scale: 0.95 }}
                   className="bg-[#5865F2] text-white font-bold text-sm btn-push flex items-center justify-center gap-2 shadow-[0_4px_0_#4752C4] transition-all duration-300 px-5 py-2.5 rounded-xl"
@@ -122,31 +206,34 @@ const App = () => {
                 </motion.button>
               </div>
             ) : (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="flex items-center gap-3 pl-2 pr-4 py-1.5 rounded-full border transition-colors bg-slate-100 border-slate-200"
-              >
-                <img
-                  src={user.avatar}
-                  alt="User"
-                  className="w-8 h-8 rounded-full bg-white shadow-sm"
-                />
-                <div className="flex flex-col leading-none">
-                  <span className="text-xs font-bold text-slate-700">
-                    {user.name}
-                  </span>
-                  <span className="text-[10px] text-slate-400">
-                    Login as {user.discriminator}
-                  </span>
-                </div>
-                <button
-                  onClick={() => setIsLoggedIn(false)}
-                  className="ml-2 text-slate-400 hover:text-red-400 transition-colors"
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="flex items-center gap-3 pl-2 pr-4 py-1.5 rounded-full border transition-colors bg-slate-100 border-slate-200"
                 >
-                  <LogOut size={14} />
-                </button>
-              </motion.div>
+                  <img
+                    src={
+                      user.avatar ||
+                      "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f464.svg"
+                    }
+                    alt="User"
+                    className="w-8 h-8 rounded-full bg-white shadow-sm"
+                  />
+                  <div className="flex flex-col leading-none">
+                    <span className="text-xs font-bold text-slate-700">
+                      {user.name}
+                    </span>
+                    <span className="text-[10px] text-slate-400">
+                      Login as #{user.discriminator}
+                    </span>
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="ml-2 text-slate-400 hover:text-red-400 transition-colors"
+                  >
+                    <LogOut size={14} />
+                  </button>
+                </motion.div>
             )}
           </div>
         </div>
