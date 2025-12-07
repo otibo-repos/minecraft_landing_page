@@ -17,9 +17,14 @@ import {
 const App = () => {
   const [user, setUser] = useState(() => {
     const stored = localStorage.getItem("discord_user");
-    return stored ? JSON.parse(stored) : null;
+    try {
+      const parsed = stored ? JSON.parse(stored) : null;
+      return parsed && parsed.id ? parsed : null;
+    } catch {
+      return null;
+    }
   });
-  const isLoggedIn = !!user;
+  const isLoggedIn = !!(user && user.id);
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const heroImages = [
@@ -67,16 +72,18 @@ const App = () => {
           return;
         }
         const data = await res.json();
-        const discordUser = {
-          id: data.user.id,
-          name: data.user.username,
-          discriminator: data.user.discriminator,
-          avatar: data.user.avatar
-            ? `https://cdn.discordapp.com/avatars/${data.user.id}/${data.user.avatar}.png`
-            : null,
-        };
-        localStorage.setItem("discord_user", JSON.stringify(discordUser));
-        setUser(discordUser);
+        if (data.user?.id) {
+          const discordUser = {
+            id: data.user.id,
+            name: data.user.username,
+            discriminator: data.user.discriminator,
+            avatar: data.user.avatar
+              ? `https://cdn.discordapp.com/avatars/${data.user.id}/${data.user.avatar}.png`
+              : null,
+          };
+          localStorage.setItem("discord_user", JSON.stringify(discordUser));
+          setUser(discordUser);
+        }
       } catch (err) {
         console.error("OAuth error", err);
       }
@@ -213,18 +220,18 @@ const App = () => {
                 >
                   <img
                     src={
-                      user.avatar ||
+                      (user?.avatar ||
                       "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f464.svg"
-                    }
+                    )}
                     alt="User"
                     className="w-8 h-8 rounded-full bg-white shadow-sm"
                   />
                   <div className="flex flex-col leading-none">
                     <span className="text-xs font-bold text-slate-700">
-                      {user.name}
+                      {user?.name ?? "Unknown"}
                     </span>
                     <span className="text-[10px] text-slate-400">
-                      Login as #{user.discriminator}
+                      Login as #{user?.discriminator ?? "0000"}
                     </span>
                   </div>
                   <button
