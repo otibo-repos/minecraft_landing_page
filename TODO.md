@@ -1,7 +1,7 @@
 # Project Task Management Rules
 
 ## 0. System Metadata
-- **Current Max ID**: `Next ID No: 1` (※タスク追加時にインクリメント必須)
+- **Current Max ID**: `Next ID No: 5` (※タスク追加時にインクリメント必須)
 - **ID Source of Truth**: このファイルの `Next ID No` 行が、全プロジェクトにおける唯一のID発番元である。
 
 ## 1. Task Lifecycle (State Machine)
@@ -180,17 +180,70 @@ ID生成およびタイトルのプレフィックスには以下のみを使用
 --- 
 
 ## Inbox
-- 
+- なし
 
 ---
 
 ## Backlog
 
----
+- **Title**: [Feat] 契約ページ実装 (Stripe + Discord OAuth)
+  - **ID**: Membership-Feat-1
+  - **Priority**: P1
+  - **Size**: L
+  - **Area**: Membership
+  - **Dependencies**: []
+  - **Goal**: Stripe Checkout で決済完了し、Discord ロール付与が自動で行われること。
+  - **Steps**:
+    1. [ ] Plan `_docs/plan/Membership/roadmap/plan.md` の M1 セクションに沿ってフロントと Functions の基本フローを実装
+    2. [ ] Discord OAuth (identify, guilds.join) を組み込み、ユーザー名/アイコン表示を確認
+    3. [ ] Stripe Webhook 署名検証と Bot API 連携をステージング環境で疎通
+    4. [ ] 決済成功→ロール付与のエンドツーエンドを確認し、デグレ用のロール同期キュー仕様を固める
+  - **Description**: 300円プラン3種の Checkout/Portal 動線とロール付与自動化を備えた本番導線を構築する。
+  - **Plan**: `_docs/plan/Membership/roadmap/plan.md`
+
+- **Title**: [Feat] 退会フロー実装 (Stripe Customer Portal)
+  - **ID**: Membership-Feat-2
+  - **Priority**: P1
+  - **Size**: M
+  - **Area**: Membership
+  - **Dependencies**: [Membership-Feat-1]
+  - **Goal**: Customer Portal からキャンセルした際、次回課金日まで利用でき、その後ロールが自動剥奪されること。
+  - **Steps**:
+    1. [ ] Plan M2 に沿って Portal リンクとキャンセル誘導 UI を組み込み
+    2. [ ] `customer.subscription.updated/deleted` Webhook を処理し、ロール剥奪スケジュールを Bot に通知
+    3. [ ] ステージングでキャンセル→更新日後の剥奪までの一連を検証
+  - **Description**: 退会を自助化しつつ、次回課金日までの利用を許容するポリシーを実装する。
+  - **Plan**: `_docs/plan/Membership/roadmap/plan.md`
+
+- **Title**: [Feat] Discord誘導LP公開 (一般公開CTA)
+  - **ID**: Membership-Feat-3
+  - **Priority**: P1
+  - **Size**: M
+  - **Area**: Membership
+  - **Dependencies**: []
+  - **Goal**: 一般公開LPから Discord 招待への CVR を計測でき、ヘッダーからメンバーシップページへ導線を設置すること。
+  - **Steps**:
+    1. [ ] `_docs/draft/design_request.md` をデザイナーへ共有し、初稿レビュー
+    2. [ ] Plan M3 に沿って LP セクション構成とコピー占位テキストを実装
+    3. [ ] レスポンシブ (モバイル優先) で崩れないことを確認し、CTAリンクを本番招待に差し替え
+  - **Description**: Discord 参加を主CTAとする一般公開LPを構築し、既存メンバーシップページへの導線も付与する。
+  - **Plan**: `_docs/plan/Membership/roadmap/plan.md`
+
+- **Title**: [Chore] GA4/Sentry 導入準備フック
+  - **ID**: Membership-Chore-4
+  - **Priority**: P3
+  - **Size**: S
+  - **Area**: Membership
+  - **Dependencies**: [Membership-Feat-1, Membership-Feat-2, Membership-Feat-3]
+  - **Goal**: GA4/Sentry を後日オンにできるよう、イベント発火ポイントとエラー境界のフックが配置されていること。
+  - **Steps**:
+    1. [ ] フロントと Functions に no-op イベント送信フック/エラー境界を配置
+    2. [ ] 環境変数キーと送信先設定の TODO コメントを残し、導入手順を Plan M4 に追記
+  - **Description**: 後日導入予定の計測基盤向けに、コード上のフックを先行で用意する。
+  - **Plan**: `_docs/plan/Membership/roadmap/plan.md`
 
 ## Ready
 
 ---
 
 ## In Progress
-
