@@ -1,7 +1,7 @@
 # Project Task Management Rules
 
 ## 0. System Metadata
-- **Current Max ID**: `Next ID No: 5` (※タスク追加時にインクリメント必須)
+- **Current Max ID**: `Next ID No: 6` (※タスク追加時にインクリメント必須)
 - **ID Source of Truth**: このファイルの `Next ID No` 行が、全プロジェクトにおける唯一のID発番元である。
 
 ## 1. Task Lifecycle (State Machine)
@@ -227,6 +227,20 @@ ID生成およびタイトルのプレフィックスには以下のみを使用
     2. [ ] Plan M3 に沿って LP セクション構成とコピー占位テキストを実装
     3. [ ] レスポンシブ (モバイル優先) で崩れないことを確認し、CTAリンクを本番招待に差し替え
   - **Description**: Discord 参加を主CTAとする一般公開LPを構築し、既存メンバーシップページへの導線も付与する。
+  - **Plan**: `_docs/plan/Membership/roadmap/plan.md`
+
+- **Title**: [Chore] GA4/Sentry 本番接続
+  - **ID**: Membership-Chore-5
+  - **Priority**: P2
+  - **Size**: M
+  - **Area**: Membership
+  - **Dependencies**: []
+  - **Goal**: GA4 と Sentry に実データが送信され、Production/Preview 双方で計測・エラー捕捉が有効化されている。
+  - **Steps**:
+    1. [ ] Plan M4 に従い、フロントの `trackEvent` を gtag もしくは Measurement Protocol 実装に置き換え、主要イベントを送信
+    2. [ ] Sentry SDK をフロント/Functions 双方に導入し、DSN・release・environment を設定、`captureError` 呼び出しを実動化
+    3. [ ] `DEBUG_TELEMETRY` を false に戻し、Production/Preview の env 設定を追加し動作確認（ダッシュボードで受信を確認）
+  - **Description**: 準備済みの no-op フックを実配信に接続し、計測・エラー監視を本番運用可能な状態にする。
   - **Plan**: `_docs/plan/Membership/roadmap/plan.md`
 
 ## Ready
