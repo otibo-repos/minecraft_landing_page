@@ -1,7 +1,7 @@
 # Project Task Management Rules
 
 ## 0. System Metadata
-- **Current Max ID**: `Next ID No: 6` (※タスク追加時にインクリメント必須)
+- **Current Max ID**: `Next ID No: 7` (※タスク追加時にインクリメント必須)
 - **ID Source of Truth**: このファイルの `Next ID No` 行が、全プロジェクトにおける唯一のID発番元である。
 
 ## 1. Task Lifecycle (State Machine)
@@ -242,6 +242,20 @@ ID生成およびタイトルのプレフィックスには以下のみを使用
     3. [ ] `DEBUG_TELEMETRY` を false に戻し、Production/Preview の env 設定を追加し動作確認（ダッシュボードで受信を確認）
   - **Description**: 準備済みの no-op フックを実配信に接続し、計測・エラー監視を本番運用可能な状態にする。
   - **Plan**: `_docs/plan/Membership/roadmap/plan.md`
+
+- **Title**: [Bug] Pricing CTA を正式な Checkout フローに接続
+  - **ID**: Membership-Bug-6
+  - **Priority**: P2
+  - **Size**: S
+  - **Area**: Membership
+  - **Dependencies**: []
+  - **Goal**: 「このプランで支援する」ボタンがDiscordログイン状態に応じて正式なCheckoutフローを起動し、暫定のテスト用フェッチが除去されている。
+  - **Steps**:
+    1. [ ] Pricing CTA の onClick を `startCheckout` に統合し、priceType マッピングを正式化
+    2. [ ] 暫定テストフェッチとログ出力を削除し、UX/エラーハンドリングを整える
+    3. [ ] ステージングでボタン押下→Checkout遷移を確認し、Portal導線との整合を確認
+  - **Description**: 一時的に追加したAPI叩き処理を本番導線に置き換え、CTAを信頼できるCheckout入口にする。
+  - **Plan**: None
 
 ## Ready
 

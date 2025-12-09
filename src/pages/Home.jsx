@@ -547,7 +547,9 @@ const Home = () => {
               </h2>
             </div>
 
-            <PricingComponent />
+            <PricingComponent
+              onStartCheckout={(priceType) => startCheckout(priceType)}
+            />
 
             <div className="text-center mt-10 text-xs text-slate-400 font-medium max-w-lg mx-auto leading-relaxed">
               ※ すべてのプランで特典内容は同じです。適用期間のみが異なります。
@@ -870,7 +872,7 @@ const DiscordMemberListMock = ({ user }) => (
   </motion.div>
 );
 
-const PricingComponent = () => {
+const PricingComponent = ({ onStartCheckout }) => {
   const [cycle, setCycle] = useState("monthly");
 
   const plans = {
@@ -1032,6 +1034,33 @@ const PricingComponent = () => {
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
+            onClick={() => {
+              // Map UI cycle to backend priceType
+              const priceType =
+                cycle === "ticket"
+                  ? "one_month"
+                  : cycle === "monthly"
+                  ? "sub_monthly"
+                  : "sub_yearly";
+
+              if (typeof onStartCheckout === "function") {
+                onStartCheckout(priceType);
+              } else {
+                // Temp: simple API ping to verify CTA wiring
+                fetch("/create-checkout-session", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    priceType: "one_month",
+                    discord_user_id: "placeholder-user",
+                  }),
+                })
+                  .then((res) =>
+                    console.log("CTA test ping /create-checkout-session", res.status)
+                  )
+                  .catch((err) => console.error("CTA test ping failed", err));
+              }
+            }}
             className={`w-full text-white py-4 rounded-2xl font-bold text-lg btn-push flex justify-center items-center gap-2 group transition-colors duration-300 ${currentPlan.bgColor} ${currentPlan.hoverBgColor} ${currentPlan.shadowStyle} active:shadow-none active:translate-y-[5px]`}
           >
             このプランで支援する{" "}
