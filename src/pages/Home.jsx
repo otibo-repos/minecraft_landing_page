@@ -117,32 +117,11 @@ const Home = () => {
   };
 
   const startCheckout = async (priceType) => {
-    if (!user) {
-      beginDiscordLogin();
-      return;
-    }
-    trackEvent("checkout_start", { priceType });
-    try {
-      const res = await fetch("/create-checkout-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          priceType,
-          discord_user_id: user.id,
-        }),
-      });
-      if (!res.ok) {
-        const text = await res.text();
-        captureError(new Error("Checkout create failed"), { priceType, text });
-        return;
-      }
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      }
-    } catch (err) {
-      captureError(err, { stage: "checkout_start", priceType });
-    }
+    // ログイン状態に関わらず、まずは契約ページへ遷移させる。
+    // 契約ページ側でログインチェックとリダイレクトを行う。
+    // これにより、プラン選択 -> ログイン -> 契約確認 というフローが自然になる。
+    trackEvent("checkout_start_redirect", { priceType });
+    window.location.href = `/contract?plan=${priceType}`;
   };
 
   const openPortal = async () => {

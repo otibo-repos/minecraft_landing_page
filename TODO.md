@@ -186,21 +186,6 @@ ID生成およびタイトルのプレフィックスには以下のみを使用
 
 ## Backlog
 
-- **Title**: [Feat] 契約ページ実装 (Stripe + Discord OAuth)
-  - **ID**: Membership-Feat-1
-  - **Priority**: P1
-  - **Size**: L
-  - **Area**: Membership
-  - **Dependencies**: []
-  - **Goal**: Stripe Checkout で決済完了し、Discord ロール付与が自動で行われること。
-  - **Steps**:
-    1. [ ] Plan `_docs/plan/Membership/roadmap/plan.md` の M1 セクションに沿ってフロントと Functions の基本フローを実装
-    2. [ ] Discord OAuth (identify, guilds.join) を組み込み、ユーザー名/アイコン表示を確認
-    3. [ ] Stripe Webhook 署名検証と Bot API 連携をステージング環境で疎通
-    4. [ ] 決済成功→ロール付与のエンドツーエンドを確認し、デグレ用のロール同期キュー仕様を固める
-  - **Description**: 300円プラン3種の Checkout/Portal 動線とロール付与自動化を備えた本番導線を構築する。
-  - **Plan**: `_docs/plan/Membership/roadmap/plan.md`
-
 - **Title**: [Feat] 退会フロー実装 (Stripe Customer Portal)
   - **ID**: Membership-Feat-2
   - **Priority**: P1
@@ -231,7 +216,7 @@ ID生成およびタイトルのプレフィックスには以下のみを使用
 
 - **Title**: [Chore] GA4/Sentry 本番接続
   - **ID**: Membership-Chore-5
-  - **Priority**: P2
+  - **Priority**: P3
   - **Size**: M
   - **Area**: Membership
   - **Dependencies**: []
@@ -242,20 +227,6 @@ ID生成およびタイトルのプレフィックスには以下のみを使用
     3. [ ] `DEBUG_TELEMETRY` を false に戻し、Production/Preview の env 設定を追加し動作確認（ダッシュボードで受信を確認）
   - **Description**: 準備済みの no-op フックを実配信に接続し、計測・エラー監視を本番運用可能な状態にする。
   - **Plan**: `_docs/plan/Membership/roadmap/plan.md`
-
-- **Title**: [Bug] Pricing CTA を正式な Checkout フローに接続
-  - **ID**: Membership-Bug-6
-  - **Priority**: P2
-  - **Size**: S
-  - **Area**: Membership
-  - **Dependencies**: []
-  - **Goal**: 「このプランで支援する」ボタンがDiscordログイン状態に応じて正式なCheckoutフローを起動し、暫定のテスト用フェッチが除去されている。
-  - **Steps**:
-    1. [ ] Pricing CTA の onClick を `startCheckout` に統合し、priceType マッピングを正式化
-    2. [ ] 暫定テストフェッチとログ出力を削除し、UX/エラーハンドリングを整える
-    3. [ ] ステージングでボタン押下→Checkout遷移を確認し、Portal導線との整合を確認
-  - **Description**: 一時的に追加したAPI叩き処理を本番導線に置き換え、CTAを信頼できるCheckout入口にする。
-  - **Plan**: None
 
 ## Ready
 
