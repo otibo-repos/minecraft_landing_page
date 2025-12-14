@@ -5,6 +5,7 @@ import Legal from "./pages/Legal.jsx";
 import Placeholder from "./pages/Placeholder.jsx";
 import Join from "./pages/Join.jsx";
 import Contract from "./pages/Contract.jsx";
+import Help from "./pages/Help.jsx";
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
             />
           }
         />
+        <Route path="/help" element={<Help />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
