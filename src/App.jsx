@@ -17,18 +17,12 @@ const App = () => {
         <Route path="/" element={<Join />} />
         <Route path="/join" element={<Join />} />
         <Route path="/membership" element={<Home />} />
-        <Route path="/legal" element={<Navigate to="/legal/terms" replace />} />
+        <Route path="/legal" element={<Legal />} />
         <Route path="/legal/tokusho" element={<Tokusho />} />
         <Route path="/legal/:docKey" element={<LegalDoc />} />
-        <Route
-          path="/contract"
-          element={
-            <Contract
-              title="支援手続き"
-              description="支援者表示やロール付与の同意を確認し、Stripe への最終ステップに進みます。"
-            />
-          }
-        />
+        <Route path="/contract" element={<Contract />} />
+        <Route path="/thanks" element={<Thanks />} />
+        <Route path="/cancellation" element={<Cancellation />} />
         <Route
           path="/community"
           element={
