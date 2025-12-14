@@ -1,0 +1,40 @@
+export const PLANS = {
+  one_month: {
+    price: 300,
+    unit: "回",
+    desc: "気軽にサーバーを支援",
+    label: "Ticket",
+    textColor: "text-lime-600",
+    bgColor: "bg-lime-500",
+    hoverBgColor: "hover:bg-lime-600",
+    borderColor: "border-lime-200",
+    iconBg: "bg-lime-500",
+    shadowStyle: "shadow-[0_5px_0_#65a30d]",
+  },
+  sub_monthly: {
+    price: 300,
+    unit: "月",
+    desc: "継続的なサポート",
+    label: "Monthly",
+    textColor: "text-[#5fbb4e]",
+    bgColor: "bg-[#5fbb4e]",
+    hoverBgColor: "hover:bg-[#4ea540]",
+    borderColor: "border-green-200",
+    iconBg: "bg-[#5fbb4e]",
+    shadowStyle: "shadow-[0_5px_0_#469e38]",
+  },
+  sub_yearly: {
+    price: 3000,
+    unit: "年",
+    desc: "１年分をまとめてお得に",
+    label: "Yearly",
+    textColor: "text-teal-600",
+    bgColor: "bg-teal-600",
+    hoverBgColor: "hover:bg-teal-700",
+    borderColor: "border-teal-200",
+    iconBg: "bg-teal-600",
+    shadowStyle: "shadow-[0_5px_0_#0d9488]",
+  },
+};
+
+export const PLAN_KEYS = ["one_month", "sub_monthly", "sub_yearly"];

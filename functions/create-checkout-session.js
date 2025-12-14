@@ -37,7 +37,13 @@ export async function onRequest(context) {
 		return new Response("Invalid JSON", { status: 400 });
 	}
 
-	const { priceType, discord_user_id, consent_display, consent_roles } =
+	const {
+		priceType,
+		discord_user_id,
+		consent_display,
+		consent_roles,
+		consent_terms,
+	} =
 		body || {};
 	if (!priceType || !discord_user_id) {
 		return new Response("Missing priceType or discord_user_id", {
@@ -75,6 +81,7 @@ export async function onRequest(context) {
 				price_type: priceType,
 				consent_display: String(consent_display),
 				consent_roles: String(consent_roles),
+				consent_terms: String(consent_terms),
 			},
 			subscription_data:
 				mode === "subscription"

@@ -7,51 +7,13 @@ import {
   ChevronRight,
   Leaf,
 } from "lucide-react";
+import { PLANS, PLAN_KEYS } from "../../constants/plans";
 
 const PricingComponent = ({ onStartCheckout }) => {
-  const [cycle, setCycle] = useState("monthly");
+  const [cycle, setCycle] = useState("sub_monthly");
 
-  const plans = {
-    ticket: {
-      price: 300,
-      unit: "回",
-      desc: "気軽にサーバーを支援",
-      label: "Ticket",
-      textColor: "text-lime-600",
-      bgColor: "bg-lime-500",
-      hoverBgColor: "hover:bg-lime-600",
-      borderColor: "border-lime-200",
-      iconBg: "bg-lime-500",
-      shadowStyle: "shadow-[0_5px_0_#65a30d]",
-    },
-    monthly: {
-      price: 300,
-      unit: "月",
-      desc: "継続的なサポート",
-      label: "Monthly",
-      textColor: "text-[#5fbb4e]",
-      bgColor: "bg-[#5fbb4e]",
-      hoverBgColor: "hover:bg-[#4ea540]",
-      borderColor: "border-green-200",
-      iconBg: "bg-[#5fbb4e]",
-      shadowStyle: "shadow-[0_5px_0_#469e38]",
-    },
-    yearly: {
-      price: 3000,
-      unit: "年",
-      desc: "１年分をまとめてお得に",
-      label: "Yearly",
-      textColor: "text-teal-600",
-      bgColor: "bg-teal-600",
-      hoverBgColor: "hover:bg-teal-700",
-      borderColor: "border-teal-200",
-      iconBg: "bg-teal-600",
-      shadowStyle: "shadow-[0_5px_0_#0d9488]",
-    },
-  };
-
-  const currentPlan = plans[cycle];
-  const planKeys = ["ticket", "monthly", "yearly"];
+  const currentPlan = PLANS[cycle];
+  const planKeys = PLAN_KEYS;
 
   const handleDragEnd = (_event, info) => {
     const threshold = 50;
@@ -72,9 +34,9 @@ const PricingComponent = ({ onStartCheckout }) => {
           className="absolute top-1.5 bottom-1.5 bg-white rounded-xl shadow-sm transition-all duration-300 ease-out z-0"
           style={{
             left:
-              cycle === "ticket"
+              cycle === "one_month"
                 ? "0.375rem"
-                : cycle === "monthly"
+                : cycle === "sub_monthly"
                 ? "33.33%"
                 : "calc(66.66% - 0.375rem)",
             width: "calc(33.33% - 0.25rem)",
@@ -85,10 +47,10 @@ const PricingComponent = ({ onStartCheckout }) => {
             key={c}
             onClick={() => setCycle(c)}
             className={`flex-1 relative z-10 py-2.5 text-sm font-bold capitalize transition-colors duration-300 ${
-              cycle === c ? plans[c].textColor : "text-slate-500 hover:text-slate-700"
+              cycle === c ? PLANS[c].textColor : "text-slate-500 hover:text-slate-700"
             }`}
           >
-            {c}
+            {PLANS[c].label}
           </button>
         ))}
       </div>
@@ -170,33 +132,26 @@ const PricingComponent = ({ onStartCheckout }) => {
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => {
-              const priceType =
-                cycle === "ticket"
-                  ? "one_month"
-                  : cycle === "monthly"
-                  ? "sub_monthly"
-                  : "sub_yearly";
-
-              if (typeof onStartCheckout === "function") {
-                onStartCheckout(priceType);
-              } else {
-                fetch("/create-checkout-session", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    priceType: "one_month",
-                    discord_user_id: "placeholder-user",
-                  }),
-                })
-                  .then((res) =>
-                    console.log("CTA test ping /create-checkout-session", res.status)
-                  )
-                  .catch((err) => console.error("CTA test ping failed", err));
-              }
-            }}
-            className={`w-full text-white py-4 rounded-2xl font-bold text-lg btn-push flex justify-center items-center gap-2 group transition-colors duration-300 ${currentPlan.bgColor} ${currentPlan.hoverBgColor} ${currentPlan.shadowStyle} active:shadow-none active:translate-y-[5px]`}
-          >
+          onClick={() => {
+            if (typeof onStartCheckout === "function") {
+              onStartCheckout(cycle);
+            } else {
+              fetch("/create-checkout-session", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  priceType: cycle,
+                  discord_user_id: "placeholder-user",
+                }),
+              })
+                .then((res) =>
+                  console.log("CTA test ping /create-checkout-session", res.status)
+                )
+                .catch((err) => console.error("CTA test ping failed", err));
+            }
+          }}
+          className={`w-full text-white py-4 rounded-2xl font-bold text-lg btn-push flex justify-center items-center gap-2 group transition-colors duration-300 ${currentPlan.bgColor} ${currentPlan.hoverBgColor} ${currentPlan.shadowStyle} active:shadow-none active:translate-y-[5px]`}
+        >
             このプランで支援する{" "}
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </motion.button>
