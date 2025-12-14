@@ -1,6 +1,6 @@
 ---
 title: Legal Pages Public Route & Rendering Plan
-status: active
+status: proposed
 draft_status: n/a
 created_at: 2025-12-14
 updated_at: 2025-12-14
@@ -38,14 +38,14 @@ related_prs: []
   - 印刷スタイルで白背景・A4想定余白・リンクURL表示。
 
 ## Tasks
-1. ✅ 依存追加: `react-markdown`, `remark-gfm`。
-2. ✅ `src/legal/config.ts` を作成し、文書メタ（key, title, description, filePath）を定義。
-3. ✅ `LegalDocPage` コンポーネントを実装：`?raw` でMD読込 → `react-markdown` で描画 → h2/h3抽出で目次生成 → 見出しID付与。
-4. ✅ 改定履歴セクションを `_docs/guide/legal/terms-of-service.md`, `privacy-policy.md`, `refund-policy.md` 末尾に追記（直近履歴3件まで）。
-5. ✅ ルーティング追加：`/legal/terms|privacy|refund` を `App.jsx` に定義。`/legal` は現行タブを残しつつ、新ページへのリンクを明示。
-6. ✅ フッター/Contract/Checkout導線に3リンクを追加し、同意文言を更新。
-7. ✅ 共通CSSへ印刷用スタイルを追加（背景白・余白・リンクURL表示）。
-8. ✅ 動作確認：各URL直アクセス、目次アンカー、印刷プレビュー、Contractリンク遷移を手動確認。
+1. 依存追加: `react-markdown`, `remark-gfm`。
+2. `src/legal/config.ts` を作成し、文書メタ（key, title, description, filePath）を定義。
+3. `LegalDocPage` コンポーネントを実装：`?raw` でMD読込 → `react-markdown` で描画 → h2/h3抽出で目次生成 → 見出しID付与。
+4. 改定履歴セクションを `_docs/guide/legal/terms-of-service.md`, `privacy-policy.md`, `refund-policy.md` 末尾に追記（直近履歴3件まで）。
+5. ルーティング追加：`/legal/terms|privacy|refund` を `App.jsx` に定義。`/legal` は現行タブを残しつつ、新ページへのリンクを明示。
+6. フッター/Contract/Checkout導線に3リンクを追加し、同意文言を更新。
+7. 共通CSSへ印刷用スタイルを追加（背景白・余白・リンクURL表示）。
+8. 動作確認：各URL直アクセス、目次アンカー、印刷プレビュー、Contractリンク遷移を手動確認。
 
 ## Test Plan
 - 手動: `/legal/terms`, `/legal/privacy`, `/legal/refund` へ直接アクセスし表示確認。
