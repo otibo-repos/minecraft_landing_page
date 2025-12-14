@@ -43,8 +43,7 @@ export async function onRequest(context) {
 		consent_display,
 		consent_roles,
 		consent_terms,
-	} =
-		body || {};
+	} = body || {};
 	if (!priceType || !discord_user_id) {
 		return new Response("Missing priceType or discord_user_id", {
 			status: 400,
@@ -74,7 +73,7 @@ export async function onRequest(context) {
 			mode,
 			customer: customer.id,
 			line_items: [{ price: priceId, quantity: 1 }],
-			success_url: `${APP_BASE_URL}/thanks?session_id={CHECKOUT_SESSION_ID}`,
+			success_url: `${APP_BASE_URL}/?checkout=success`,
 			cancel_url: `${APP_BASE_URL}/?checkout=cancel`,
 			metadata: {
 				discord_user_id,

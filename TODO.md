@@ -190,15 +190,15 @@ ID生成およびタイトルのプレフィックスには以下のみを使用
   - **ID**: Membership-Chore-13
   - **Priority**: P2
   - **Size**: XS
-  - **Area**: Membership
-  - **Dependencies**: []
-  - **Goal**: `/thanks` ページの Discord 誘導リンクが正式な本番チャンネル URL に更新されている。
-  - **Steps**:
-    1. [ ] 正式なDiscordチャンネルURLを運営から取得
-    2. [ ] `src/pages/Thanks.jsx` 内の定数を差し替え、必要なら TODO を完了扱いにする
-    3. [ ] 動作確認後、タスクを Done に移す
-  - **Description**: 暫定URL `https://discord.com/channels/746587719827980359/947145885798776902` を、本番の誘導先に置き換える。
-  - **Plan**: None
+- **Area**: Membership
+- **Dependencies**: []
+- **Goal**: 決済完了後に表示されるサクセスバナーの Discord 誘導リンクが正式な本番チャンネル URL に更新されている。
+- **Steps**:
+  1. [ ] 正式なDiscordチャンネルURLを運営から取得
+  2. [ ] `src/pages/Home.jsx` のサクセスバナー内リンクを差し替え、必要なら TODO を完了扱いにする
+  3. [ ] 動作確認後、タスクを Done に移す
+- **Description**: 暫定URL `https://discord.com/channels/746587719827980359/947145885798776902` を、本番の誘導先に置き換える。
+- **Plan**: None
 
 - **Title**: [Feat] 退会フロー実装 (Stripe Customer Portal)
   - **ID**: Membership-Feat-2
