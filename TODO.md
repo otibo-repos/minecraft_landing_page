@@ -234,12 +234,28 @@ ID生成およびタイトルのプレフィックスには以下のみを使用
   - **Size**: M
   - **Area**: Membership
   - **Dependencies**: []
-  - **Goal**: 一般公開LPから Discord 招待への CVR を計測でき、ヘッダーからメンバーシップページへ導線を設置すること。
+  - **Goal**: 一般公開LPから Discord 招待リンクへの CVR を計測でき、ヘッダーからメンバーシップページへ導線を設置すること。
   - **Steps**:
-    1. [ ] `_docs/draft/design_request.md` をデザイナーへ共有し、初稿レビュー
+    1. [ ] `_docs/draft/design_request.md` をデザイナーへ共有し、初稿レビュー（CTAは招待URL直リンク、OAuth導線なしに更新）
     2. [ ] Plan M3 に沿って LP セクション構成とコピー占位テキストを実装
-    3. [ ] レスポンシブ (モバイル優先) で崩れないことを確認し、CTAリンクを本番招待に差し替え
-  - **Description**: Discord 参加を主CTAとする一般公開LPを構築し、既存メンバーシップページへの導線も付与する。
+    3. [ ] レスポンシブ (モバイル優先) で崩れないことを確認し、CTAリンクを `DISCORD_INVITE_URL` に差し替え
+  - **Description**: Discord 招待リンクを主CTAとする一般公開LPを構築し、既存メンバーシップページへの導線も付与する。
+  - **Plan**: `_docs/plan/Membership/roadmap/plan.md`
+
+- **Title**: [Doc] Discord誘導LPデザイン依頼ブリーフ作成
+  - **ID**: Membership-Doc-14
+  - **Priority**: P2
+  - **Size**: S
+  - **Area**: Membership
+  - **Dependencies**: []
+  - **Goal**: デザイナー向けに、LPの役割/必須セクション/トークン/コピー方針/ロゴプレースホルダー指示をまとめたブリーフを共有可能な状態にする。
+  - **Steps**:
+    1. [ ] `_docs/draft/design_request.md` を更新し、本タスクで確定した要件（招待URL一本化、OAuth導線は membership のみ、`DISCORD_INVITE_URL` 参照）を反映
+    2. [ ] ロゴはプレースホルダー使用を明記し、禁止素材なし・独自素材未使用を指示
+    3. [ ] CTAは招待URL直リンク一本化、失敗時はリトライ促しのみ（フォールバックなし）と記載
+    4. [ ] 計測イベント（hero_cta_click, invite_click, invite_retry など）を「有効化予定・時期未定」で明記
+    5. [ ] 最低幅320px想定・固定情報中心で更新不要な構成にする方針を記載
+  - **Description**: LPデザインを外注するためのブリーフを作成し、デザイントークンと既存ヘッダー/フッター前提で制作できるようにする。
   - **Plan**: `_docs/plan/Membership/roadmap/plan.md`
 
 - **Title**: [Chore] GA4/Sentry 本番接続
