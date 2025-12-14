@@ -9,6 +9,7 @@ import AuthCallback from "./pages/AuthCallback.jsx";
 import LegalDoc from "./pages/LegalDoc.jsx";
 import Thanks from "./pages/Thanks.jsx";
 import Cancellation from "./pages/Cancellation.jsx";
+import Supporters from "./pages/Supporters.jsx";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/contract" element={<Contract />} />
         <Route path="/thanks" element={<Thanks />} />
         <Route path="/cancellation" element={<Cancellation />} />
+        <Route path="/supporters" element={<Supporters />} />
         <Route
           path="/community"
           element={
