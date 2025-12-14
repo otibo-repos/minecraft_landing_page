@@ -109,12 +109,14 @@ const Home = () => {
 
   const beginDiscordLogin = () => {
     trackEvent("login_start", { provider: "discord" });
+    const returnTo = `${window.location.pathname}${window.location.search}`;
     const params = new URLSearchParams({
       client_id: import.meta.env.VITE_DISCORD_CLIENT_ID || "",
       response_type: "code",
       scope: "identify guilds.join",
       redirect_uri: redirectUriClient,
       prompt: "consent",
+      state: returnTo || "/membership",
     });
     window.location.href = `https://discord.com/oauth2/authorize?${params.toString()}`;
   };

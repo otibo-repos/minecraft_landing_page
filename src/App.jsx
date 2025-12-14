@@ -6,11 +6,13 @@ import Placeholder from "./pages/Placeholder.jsx";
 import Join from "./pages/Join.jsx";
 import Contract from "./pages/Contract.jsx";
 import Help from "./pages/Help.jsx";
+import AuthCallback from "./pages/AuthCallback.jsx";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/" element={<Join />} />
         <Route path="/join" element={<Join />} />
         <Route path="/membership" element={<Home />} />
