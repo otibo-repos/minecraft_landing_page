@@ -74,7 +74,7 @@ export async function onRequest(context) {
 			mode,
 			customer: customer.id,
 			line_items: [{ price: priceId, quantity: 1 }],
-			success_url: `${APP_BASE_URL}/?checkout=success`,
+			success_url: `${APP_BASE_URL}/thanks?session_id={CHECKOUT_SESSION_ID}`,
 			cancel_url: `${APP_BASE_URL}/?checkout=cancel`,
 			metadata: {
 				discord_user_id,

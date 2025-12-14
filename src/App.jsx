@@ -8,6 +8,7 @@ import Help from "./pages/Help.jsx";
 import AuthCallback from "./pages/AuthCallback.jsx";
 import LegalDoc from "./pages/LegalDoc.jsx";
 import Tokusho from "./pages/Tokusho.jsx";
+import Thanks from "./pages/Thanks.jsx";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/legal" element={<Navigate to="/legal/terms" replace />} />
         <Route path="/legal/tokusho" element={<Tokusho />} />
         <Route path="/legal/:docKey" element={<LegalDoc />} />
+        <Route path="/thanks" element={<Thanks />} />
         <Route
           path="/contract"
           element={
