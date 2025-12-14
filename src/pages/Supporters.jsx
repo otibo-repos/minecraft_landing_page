@@ -1,48 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Search, Crown, Star, Shield, Filter } from "lucide-react";
 import Header from "../components/layout/Header.jsx";
 import Footer from "../components/layout/Footer.jsx";
 
-// --- Mock Data ---
-const MOCK_SUPPORTERS = [
-  {
-    id: "1",
-    name: "CraftMaster_99",
-    discriminator: "1234",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix",
-    plan: "Yearly",
-    role: "Legendary Builder",
+const planStyles = {
+  Yearly: {
     color: "text-amber-500",
     bg: "bg-amber-50",
     border: "border-amber-200",
-    joinedAt: "2023-01-15",
   },
-  {
-    id: "2",
-    name: "RedstonePro",
-    discriminator: "5678",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka",
-    plan: "Monthly",
-    role: "Supporter",
+  Monthly: {
     color: "text-[#5fbb4e]",
     bg: "bg-[#5fbb4e]/10",
     border: "border-[#5fbb4e]/30",
-    joinedAt: "2023-03-10",
   },
-  {
-    id: "3",
-    name: "Steve_Jobs",
-    discriminator: "9012",
-    avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Zack",
-    plan: "Ticket",
-    role: "Member",
+  Ticket: {
     color: "text-blue-500",
     bg: "bg-blue-50",
     border: "border-blue-200",
-    joinedAt: "2023-05-20",
   },
-];
+  Supporter: {
+    color: "text-slate-500",
+    bg: "bg-slate-50",
+    border: "border-slate-200",
+  },
+};
 
 const SupporterCard = ({ supporter, index }) => (
   <motion.div
@@ -74,15 +57,11 @@ const SupporterCard = ({ supporter, index }) => (
           <h3 className="font-bold text-slate-800 text-lg leading-tight">
             {supporter.name}
           </h3>
-          <span className="text-xs text-slate-400 font-mono">#{supporter.discriminator}</span>
         </div>
         
         <div className="flex flex-wrap gap-2 mb-3">
           <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider ${supporter.bg} ${supporter.color}`}>
             {supporter.plan} Plan
-          </span>
-          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">
-            <Shield size={10} /> {supporter.role}
           </span>
         </div>
 
@@ -96,6 +75,9 @@ const SupporterCard = ({ supporter, index }) => (
 
 const Supporters = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [supporters, setSupporters] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [user, setUser] = useState(() => {
     try {
       const stored = localStorage.getItem("discord_user");
@@ -105,9 +87,51 @@ const Supporters = () => {
     }
   });
 
+  useEffect(() => {
+    let aborted = false;
+    (async () => {
+      try {
+        const res = await fetch("/api/supporters", {
+          headers: { Accept: "application/json" },
+        });
+        if (!res.ok) {
+          throw new Error(`API error ${res.status}`);
+        }
+        const data = await res.json();
+        if (aborted) return;
+        const mapped = (data?.supporters || []).map((s) => {
+          const style = planStyles[s.plan] || planStyles.Supporter;
+          return {
+            ...s,
+            ...style,
+            bg: style.bg,
+            color: style.color,
+            border: style.border,
+            joinedAt: s.joinedAt || "---",
+          };
+        });
+        setSupporters(mapped);
+      } catch (err) {
+        if (!aborted) {
+          setError("サポーターの取得に失敗しました。");
+        }
+      } finally {
+        if (!aborted) setLoading(false);
+      }
+    })();
+
+    return () => {
+      aborted = true;
+    };
+  }, []);
+
   const handleLogin = () => { window.location.href = "/membership"; };
   const handleLogout = () => { localStorage.removeItem("discord_user"); setUser(null); };
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
+  const filtered = supporters.filter((s) =>
+    s.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="min-h-screen bg-[#f8fafc] font-sans selection:bg-[#5fbb4e]/30 text-slate-800">
@@ -166,16 +190,21 @@ const Supporters = () => {
                 <span>All Plans</span>
               </button>
               <div className="text-xs font-bold text-slate-400 px-2">
-                Total: <span className="text-slate-800">1,240</span>
+                Total: <span className="text-slate-800">{loading ? "..." : filtered.length}</span>
               </div>
             </div>
           </div>
 
           {/* Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {MOCK_SUPPORTERS.map((supporter, index) => (
+            {(loading ? supporters : filtered).map((supporter, index) => (
               <SupporterCard key={supporter.id} supporter={supporter} index={index} />
             ))}
+            {!loading && filtered.length === 0 && (
+              <div className="col-span-full text-center text-slate-400 font-bold py-10">
+                {error || "該当するサポーターが見つかりません。"}
+              </div>
+            )}
           </div>
 
           {/* Pagination Mock */}
