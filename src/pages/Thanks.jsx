@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
+import { beginDiscordLogin } from "../utils/discordAuth";
 import InteractiveClover from "../components/ui/InteractiveClover";
 
 // --- Mock Data ---
@@ -107,7 +108,7 @@ export default function Thanks() {
       <Header 
         isLoggedIn={true} 
         user={user} 
-        onLogin={() => {}} 
+        onLogin={beginDiscordLogin} 
         onLogout={() => {}} 
         onScrollTop={scrollToTop} 
       />

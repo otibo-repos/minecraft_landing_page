@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
+import { beginDiscordLogin } from "../utils/discordAuth";
 
 // --- Mock Data ---
 const ACTIVE_MEMBERS = [
@@ -81,10 +82,7 @@ const Join = () => {
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
-  const handleLogin = () => {
-    // Navigate to membership page or trigger login flow if needed
-    window.location.href = "/membership"; 
-  };
+  const handleLogin = () => beginDiscordLogin();
 
   const handleLogout = () => {
     localStorage.removeItem("discord_user");

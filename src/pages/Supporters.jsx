@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Search, Crown, Star, Shield, Filter } from "lucide-react";
+import { Search, Crown, Star, Shield } from "lucide-react";
 import Header from "../components/layout/Header.jsx";
 import Footer from "../components/layout/Footer.jsx";
+import { beginDiscordLogin } from "../utils/discordAuth";
 
 const planStyles = {
   Yearly: {
@@ -73,11 +74,14 @@ const SupporterCard = ({ supporter, index }) => (
   </motion.div>
 );
 
+const PAGE_SIZE = 9;
+
 const Supporters = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [supporters, setSupporters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const [user, setUser] = useState(() => {
     try {
       const stored = localStorage.getItem("discord_user");
@@ -111,6 +115,7 @@ const Supporters = () => {
           };
         });
         setSupporters(mapped);
+        setCurrentPage(1);
       } catch (err) {
         if (!aborted) {
           setError("サポーターの取得に失敗しました。");
@@ -125,13 +130,41 @@ const Supporters = () => {
     };
   }, []);
 
-  const handleLogin = () => { window.location.href = "/membership"; };
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm]);
+
+  const handleLogin = () => beginDiscordLogin();
   const handleLogout = () => { localStorage.removeItem("discord_user"); setUser(null); };
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   const filtered = supporters.filter((s) =>
     s.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+  const safeCurrentPage =
+    totalPages === 0 ? 1 : Math.min(currentPage, totalPages);
+  const paginatedSupporters = loading
+    ? supporters
+    : filtered.slice(
+        (safeCurrentPage - 1) * PAGE_SIZE,
+        safeCurrentPage * PAGE_SIZE
+      );
+
+  const buildPageButtons = () => {
+    if (totalPages <= 1) return [];
+    if (totalPages <= 7) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+    const pages = [1];
+    if (safeCurrentPage > 3) pages.push("...");
+    const start = Math.max(2, safeCurrentPage - 1);
+    const end = Math.min(totalPages - 1, safeCurrentPage + 1);
+    for (let p = start; p <= end; p += 1) pages.push(p);
+    if (safeCurrentPage < totalPages - 2) pages.push("...");
+    pages.push(totalPages);
+    return pages;
+  };
 
   return (
     <div className="min-h-screen bg-[#f8fafc] font-sans selection:bg-[#5fbb4e]/30 text-slate-800">
@@ -184,11 +217,7 @@ const Supporters = () => {
               />
             </div>
             
-            <div className="flex items-center gap-2 w-full md:w-auto">
-              <button className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-100 transition-colors">
-                <Filter size={16} />
-                <span>All Plans</span>
-              </button>
+            <div className="flex items-center justify-end w-full md:w-auto">
               <div className="text-xs font-bold text-slate-400 px-2">
                 Total: <span className="text-slate-800">{loading ? "..." : filtered.length}</span>
               </div>
@@ -197,7 +226,7 @@ const Supporters = () => {
 
           {/* Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {(loading ? supporters : filtered).map((supporter, index) => (
+            {paginatedSupporters.map((supporter, index) => (
               <SupporterCard key={supporter.id} supporter={supporter} index={index} />
             ))}
             {!loading && filtered.length === 0 && (
@@ -208,20 +237,28 @@ const Supporters = () => {
           </div>
 
           {/* Pagination Mock */}
-          <div className="mt-12 flex justify-center gap-2">
-            {[1, 2, 3, '...', 12].map((page, i) => (
-              <button
-                key={i}
-                className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold transition-all ${
-                  page === 1 
-                    ? "bg-[#5fbb4e] text-white shadow-md" 
-                    : "bg-white text-slate-500 border border-slate-200 hover:bg-slate-50"
-                }`}
-              >
-                {page}
-              </button>
-            ))}
-          </div>
+          {buildPageButtons().length > 0 && (
+            <div className="mt-12 flex justify-center gap-2">
+              {buildPageButtons().map((page, i) => {
+                const isEllipsis = page === "...";
+                const isActive = page === safeCurrentPage;
+                return (
+                  <button
+                    key={`${page}-${i}`}
+                    disabled={isEllipsis}
+                    onClick={() => !isEllipsis && setCurrentPage(page)}
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold transition-all ${
+                      isActive
+                        ? "bg-[#5fbb4e] text-white shadow-md"
+                        : "bg-white text-slate-500 border border-slate-200 hover:bg-slate-50 disabled:opacity-60 disabled:cursor-default"
+                    }`}
+                  >
+                    {page}
+                  </button>
+                );
+              })}
+            </div>
+          )}
 
         </div>
       </main>

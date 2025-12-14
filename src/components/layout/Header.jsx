@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { LogOut } from "lucide-react";
 import InteractiveClover from "../ui/InteractiveClover";
+import { beginDiscordLogin } from "../../utils/discordAuth";
 
 const Header = ({
   isLoggedIn,
@@ -17,11 +18,31 @@ const Header = ({
       "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f464.svg",
   };
 
+  const handleLogin = () => {
+    if (onLogin) {
+      onLogin();
+      return;
+    }
+    beginDiscordLogin();
+  };
+
+  const handleBrandClick = () => {
+    if (typeof window !== "undefined") {
+      if (window.location.pathname === "/") {
+        onScrollTop?.();
+        return;
+      }
+      window.location.href = "/";
+      return;
+    }
+    onScrollTop?.();
+  };
+
   return (
     <nav className="fixed top-0 w-full z-50 h-16 md:h-20 flex items-center glass-header shadow-sm transition-all duration-300">
       <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
         <motion.button
-          onClick={onScrollTop}
+          onClick={handleBrandClick}
           className="flex items-baseline gap-2 group cursor-pointer text-left focus:outline-none"
           whileTap={{ scale: 0.98 }}
         >
@@ -37,7 +58,7 @@ const Header = ({
           {!isLoggedIn ? (
             <div className="flex flex-col items-end">
               <motion.button
-                onClick={onLogin}
+                onClick={handleLogin}
                 whileHover={{ scale: 1.05, backgroundColor: "#4752C4" }}
                 whileTap={{ scale: 0.95 }}
                 className="bg-[#5865F2] text-white font-bold text-sm btn-push flex items-center justify-center gap-2 shadow-[0_4px_0_#4752C4] transition-all duration-300 px-5 py-2.5 rounded-xl"

@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
+import { beginDiscordLogin } from "../utils/discordAuth";
 
 // --- Mock Data ---
 const MOCK_USER = {
@@ -75,7 +76,7 @@ export default function CancellationSuccessPage() {
       <Header 
         isLoggedIn={!!user} 
         user={user} 
-        onLogin={() => {}} 
+        onLogin={beginDiscordLogin} 
         onLogout={() => {}} 
         onScrollTop={scrollToTop} 
       />
