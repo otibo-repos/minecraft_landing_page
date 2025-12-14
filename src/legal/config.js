@@ -1,6 +1,7 @@
 import termsContent from "../../_docs/guide/legal/terms-of-service.md?raw";
 import privacyContent from "../../_docs/guide/legal/privacy-policy.md?raw";
 import refundContent from "../../_docs/guide/legal/refund-policy.md?raw";
+import tokushoContent from "../../_docs/guide/legal/specified-commercial-transaction.md?raw";
 
 export const legalDocs = {
   terms: {
@@ -31,6 +32,16 @@ export const legalDocs = {
     effectiveAt: "2025-12-14",
     path: "/legal/refund",
     content: refundContent,
+  },
+  tokusho: {
+    key: "tokusho",
+    title: "特定商取引法に基づく表記",
+    description:
+      "事業者情報、役務の対価、支払時期・方法、提供時期、返品・キャンセル等の条件を記載します。",
+    updatedAt: "2025-12-14",
+    effectiveAt: "2025-12-14",
+    path: "/legal/tokusho",
+    content: tokushoContent,
   },
 };
 
