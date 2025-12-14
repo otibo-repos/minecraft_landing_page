@@ -122,9 +122,6 @@ const Home = () => {
   };
 
   const startCheckout = async (priceType) => {
-    // ログイン状態に関わらず、まずは契約ページへ遷移させる。
-    // 契約ページ側でログインチェックとリダイレクトを行う。
-    // これにより、プラン選択 -> ログイン -> 契約確認 というフローが自然になる。
     trackEvent("checkout_start_redirect", { priceType });
     window.location.href = `/contract?plan=${priceType}`;
   };
@@ -459,25 +456,31 @@ const Home = () => {
           </div>
         </section>
 
-        <section id="pricing" className="py-12 relative">
+        <section id="pricing" className="py-20 relative">
           <div className="container mx-auto px-4">
-            <div className="flex flex-col items-center mb-10">
+            <div className="flex flex-col items-center mb-12">
               <span className="text-[#5fbb4e] font-black tracking-widest uppercase text-sm mb-3 block">
                 Supporter Plans
               </span>
 
               <CommunityGoalWidget />
 
-              <h2 className="text-3xl md:text-4xl font-black text-slate-800 mb-2">
+              <h2 className="text-3xl md:text-4xl font-black text-slate-800 mb-4 text-center">
                 支援の方法を選ぶ
               </h2>
+              <p className="text-slate-500 font-bold text-sm max-w-lg text-center leading-relaxed">
+                プレイスタイルに合わせて、3つのプランからお選びいただけます。<br/>
+                どのプランでも、サーバーへの愛は同じように届きます！
+              </p>
             </div>
 
-            <PricingComponent
-              onStartCheckout={(priceType) => startCheckout(priceType)}
-            />
+            <div className="max-w-5xl mx-auto">
+              <PricingComponent
+                onStartCheckout={(priceType) => startCheckout(priceType)}
+              />
+            </div>
 
-            <div className="text-center mt-10 text-xs text-slate-400 font-medium max-w-lg mx-auto leading-relaxed">
+            <div className="text-center mt-12 text-xs text-slate-400 font-medium max-w-lg mx-auto leading-relaxed">
               ※ すべてのプランで特典内容は同じです。適用期間のみが異なります。
               <br />
               ※ 決済はStripeを通じて安全に行われます。
