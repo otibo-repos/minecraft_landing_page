@@ -26,7 +26,7 @@ export async function onRequest(context) {
 
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId, {
-      expand: ["payment_intent", "subscription", "line_items.data.price"],
+      expand: ["payment_intent", "subscription", "line_items"],
     });
 
     const status = session.status;
