@@ -104,10 +104,13 @@ async function fetchActiveSubscriptions(stripeConfig) {
 
     const plan = resolvePlan(sub);
     const startedAt = sub.start_date ? new Date(sub.start_date * 1000).toISOString() : undefined;
+    const customerAvatar =
+      sub.customer && !sub.customer.deleted ? sub.customer.metadata?.avatar_url : null;
+    const avatarUrl = sub.metadata?.avatar_url || customerAvatar || null;
 
     const existing = map.get(userId);
     if (!existing || PLAN_PRIORITY[plan] > PLAN_PRIORITY[existing.plan]) {
-      map.set(userId, { plan, startedAt });
+      map.set(userId, { plan, startedAt, avatarUrl });
     }
   }
 
@@ -175,7 +178,7 @@ function buildSupporterList(subscriptionMap, members) {
     return Array.from(subscriptionMap.entries()).map(([userId, sub]) => ({
       id: userId,
       name: `Member_${userId.slice(0, 6)}`,
-      avatar: `${DISCORD_AVATAR_BASE}/embed/avatars/0.png`,
+      avatar: sub.avatarUrl || `${DISCORD_AVATAR_BASE}/embed/avatars/0.png`,
       plan: sub.plan,
       joinedAt: formatDate(sub.startedAt),
     }));
@@ -193,7 +196,7 @@ function buildSupporterList(subscriptionMap, members) {
         member?.user?.global_name ||
         member?.user?.username ||
         "Member",
-      avatar: buildAvatarUrl(member?.user),
+      avatar: sub?.avatarUrl || buildAvatarUrl(member?.user),
       plan,
       joinedAt: formatDate(sub?.startedAt || member?.joined_at),
     };

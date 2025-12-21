@@ -191,6 +191,7 @@ export default function Contract() {
         body: JSON.stringify({
           priceType: planParam,
           discord_user_id: user.id,
+          avatar_url: user.avatar || null,
           consent_display: agreements.publicListing,
           consent_roles: agreements.discordRole,
           consent_terms: agreements.terms,
