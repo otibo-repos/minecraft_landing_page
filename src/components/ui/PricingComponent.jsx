@@ -83,7 +83,7 @@ const PricingComponent = ({ onStartCheckout }) => {
             >
               <span 
                 className={`text-sm font-bold cursor-pointer transition-colors ${!isYearly ? "text-slate-800" : "text-slate-400"}`}
-                onClick={() => setIsYearly(false)}
+                onClick={() => setIsYearly((prev) => !prev)}
               >
                 月払い
               </span>
@@ -103,7 +103,7 @@ const PricingComponent = ({ onStartCheckout }) => {
               
               <div 
                 className="flex items-center gap-2 cursor-pointer"
-                onClick={() => setIsYearly(true)}
+                onClick={() => setIsYearly((prev) => !prev)}
               >
                 <span className={`text-sm font-bold transition-colors ${isYearly ? "text-slate-800" : "text-slate-400"}`}>
                   年払い
@@ -182,9 +182,9 @@ const PricingComponent = ({ onStartCheckout }) => {
                   <div className="w-full h-px bg-slate-100 mb-6" />
                   {[
                     "サポーター限定Discordロール", 
-                    "ゲーム内ネームカラー変更", 
+                    "ゲーム内での優遇", 
                     "限定チャンネルへのアクセス",
-                    billingType === "subscription" ? "毎月の継続ボーナス" : null,
+                    "今後さらに追加予定...",
                     isRecommended ? "限定プロファイルバッジ" : null
                   ].filter(Boolean).map((feature, i) => (
                     <motion.div 
@@ -212,7 +212,7 @@ const PricingComponent = ({ onStartCheckout }) => {
                 >
                   <span className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-200 rounded-2xl pointer-events-none"></span>
                   <span className="relative z-10 flex items-center gap-2">
-                    このプランで支援する <ArrowRight size={20} strokeWidth={3} />
+                    このプランで始める <ArrowRight size={20} strokeWidth={3} />
                   </span>
                 </button>
              </div>
