@@ -113,56 +113,56 @@ const PricingComponent = ({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -5 }}
               transition={{ duration: 0.15 }}
-              className="flex items-stretch gap-4 bg-white border border-slate-100 rounded-full px-6 py-2 shadow-sm"
+              className="relative bg-white border border-slate-100 rounded-full px-6 py-2 shadow-sm"
             >
               <button
                 type="button"
+                aria-pressed={isYearly}
+                aria-label={isYearly ? "年払いを選択中。クリックで月払いに切り替え" : "月払いを選択中。クリックで年払いに切り替え"}
                 onClick={() => {
                   if (locked) return;
-                  setIsYearly(false);
+                  setIsYearly((prev) => !prev);
                 }}
-                className={`flex-1 flex items-center justify-end px-2 py-3 -my-2 text-sm font-bold transition-colors ${
-                  !isYearly ? "text-slate-800" : "text-slate-400"
-                }`}
+                className="absolute inset-0 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
               >
-                月払い
+                <span className="sr-only">
+                  {isYearly ? "年払いを選択中。クリックで月払いに切り替え" : "月払いを選択中。クリックで年払いに切り替え"}
+                </span>
               </button>
-              
-              <button
-                onClick={() => {
-                  if (locked) return;
-                  setIsYearly(!isYearly);
-                }}
-                className={`relative w-12 h-7 rounded-full transition-colors duration-200 focus:outline-none shrink-0 self-center ${
-                  isYearly ? "bg-teal-500" : "bg-slate-200"
-                }`}
-              >
-                <motion.div
-                  className="absolute top-1 left-1 w-5 h-5 bg-white rounded-full shadow-md"
-                  animate={{ x: isYearly ? 20 : 0 }}
-                  transition={{ type: "spring", stiffness: 700, damping: 30 }}
-                />
-              </button>
-              
-              <button
-                type="button"
-                onClick={() => {
-                  if (locked) return;
-                  setIsYearly(true);
-                }}
-                className="flex-1 flex items-center justify-start gap-2 px-2 py-3 -my-2"
-              >
+              <div className="flex items-center gap-4 pointer-events-none">
                 <span
                   className={`text-sm font-bold transition-colors ${
-                    isYearly ? "text-slate-800" : "text-slate-400"
+                    !isYearly ? "text-slate-800" : "text-slate-400"
                   }`}
                 >
-                  年払い
+                  月払い
                 </span>
-                <span className="bg-teal-100 text-teal-700 text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wide border border-teal-200 flex items-center gap-1">
-                  <Sparkles size={10} /> 2ヶ月分無料
+
+                <span
+                  className={`relative w-12 h-7 rounded-full transition-colors duration-200 ${
+                    isYearly ? "bg-teal-500" : "bg-slate-200"
+                  }`}
+                >
+                  <motion.span
+                    className="absolute top-1 left-1 w-5 h-5 bg-white rounded-full shadow-md"
+                    animate={{ x: isYearly ? 20 : 0 }}
+                    transition={{ type: "spring", stiffness: 700, damping: 30 }}
+                  />
                 </span>
-              </button>
+
+                <span className="flex items-center gap-2">
+                  <span
+                    className={`text-sm font-bold transition-colors ${
+                      isYearly ? "text-slate-800" : "text-slate-400"
+                    }`}
+                  >
+                    年払い
+                  </span>
+                  <span className="bg-teal-100 text-teal-700 text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wide border border-teal-200 flex items-center gap-1">
+                    <Sparkles size={10} /> 2ヶ月分無料
+                  </span>
+                </span>
+              </div>
             </motion.div>
           ) : (
             <motion.div
