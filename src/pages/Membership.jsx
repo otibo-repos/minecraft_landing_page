@@ -359,7 +359,7 @@ const Membership = () => {
                   }}
                   className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-snug drop-shadow-2xl tracking-tight"
                 >
-                  <span className="inline-block">ここでの時間を、</span>
+                  <span className="inline-block">いつもの場所を、</span>
                   <br className="md:hidden" />
                   <span className="text-[#5fbb4e] text-glow inline-block md:ml-4">
                     特別なものに。
