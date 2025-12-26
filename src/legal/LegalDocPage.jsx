@@ -22,11 +22,11 @@ const stripFrontMatter = (markdown) => {
 };
 
 const LegalDocPage = ({ docKey }) => {
-  const doc = legalDocs[docKey] ?? legalDocs.terms;
+  const doc = legalDocs[docKey];
   const navigate = useNavigate();
   const activeIndex = Math.max(
     0,
-    legalDocList.findIndex((item) => item.key === doc.key)
+    legalDocList.findIndex((item) => item.key === doc?.key)
   );
   const segmentCount = legalDocList.length || 1;
 
@@ -40,12 +40,12 @@ const LegalDocPage = ({ docKey }) => {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [doc.key]);
+  }, [doc?.key]);
 
-  const counts = useMemo(() => new Map(), [doc.content]);
+  const counts = useMemo(() => new Map(), [doc?.content]);
   const sanitizedContent = useMemo(
-    () => stripFrontMatter(doc.content),
-    [doc.content]
+    () => stripFrontMatter(doc?.content || ""),
+    [doc?.content]
   );
 
   const renderers = useMemo(
@@ -115,16 +115,16 @@ const LegalDocPage = ({ docKey }) => {
     });
 
   const handleTabClick = (key) => {
-    if (key === doc.key) return;
-    navigate(`/legal/${key}`);
+    if (key === doc?.key) return;
+    navigate("/legal");
   };
 
   return (
     <div className="min-h-screen bg-[#f0f9ff] text-[#1e293b] font-sans">
       <Seo
-        title={doc.title}
-        description={doc.description}
-        path={doc.path}
+        title={doc?.title || "お知らせ"}
+        description={doc?.description || "現在はご案内を行っていません。"}
+        path={doc?.path || "/legal"}
         type="article"
       />
       <main className="container mx-auto px-4 md:px-6 py-14 max-w-5xl">
@@ -139,40 +139,50 @@ const LegalDocPage = ({ docKey }) => {
         </div>
 
         <div className="bg-white border border-slate-100 rounded-3xl shadow-xl p-6 md:p-8">
-          <div className="bg-slate-100 p-1.5 rounded-2xl flex relative mb-6">
-            <div
-              className="absolute top-1.5 bottom-1.5 bg-white rounded-xl shadow-sm transition-all duration-300 ease-out"
-              style={indicatorStyle}
-            />
-            {legalDocList.map((item) => (
-              <button
-                key={item.key}
-                onClick={() => handleTabClick(item.key)}
-                className={`flex-1 relative z-10 py-2.5 text-sm font-bold transition-colors duration-300 ${
-                  doc.key === item.key
-                    ? "text-[#1e293b]"
-                    : "text-slate-500 hover:text-slate-700"
-                }`}
-              >
-                {item.title}
-              </button>
-            ))}
-          </div>
+          {legalDocList.length > 0 && doc ? (
+            <>
+              <div className="bg-slate-100 p-1.5 rounded-2xl flex relative mb-6">
+                <div
+                  className="absolute top-1.5 bottom-1.5 bg-white rounded-xl shadow-sm transition-all duration-300 ease-out"
+                  style={indicatorStyle}
+                />
+                {legalDocList.map((item) => (
+                  <button
+                    key={item.key}
+                    onClick={() => handleTabClick(item.key)}
+                    className={`flex-1 relative z-10 py-2.5 text-sm font-bold transition-colors duration-300 ${
+                      doc.key === item.key
+                        ? "text-[#1e293b]"
+                        : "text-slate-500 hover:text-slate-700"
+                    }`}
+                  >
+                    {item.title}
+                  </button>
+                ))}
+              </div>
 
-          <div className="mb-6">
-            <h1 className="text-3xl md:text-4xl font-black text-slate-900 mb-2">
-              {doc.title}
-            </h1>
-            <p className="text-sm md:text-base text-slate-600">
-              {doc.description}
-            </p>
-          </div>
+              <div className="mb-6">
+                <h1 className="text-3xl md:text-4xl font-black text-slate-900 mb-2">
+                  {doc.title}
+                </h1>
+                <p className="text-sm md:text-base text-slate-600">
+                  {doc.description}
+                </p>
+              </div>
 
-          <article className="prose max-w-none prose-slate">
-            <ReactMarkdown remarkPlugins={[remarkGfm]} components={renderers}>
-              {sanitizedContent}
-            </ReactMarkdown>
-          </article>
+              <article className="prose max-w-none prose-slate">
+                <ReactMarkdown remarkPlugins={[remarkGfm]} components={renderers}>
+                  {sanitizedContent}
+                </ReactMarkdown>
+              </article>
+            </>
+          ) : (
+            <div className="py-16 text-center">
+              <p className="text-base md:text-lg font-semibold text-slate-600">
+                現在はご案内を行っていません。
+              </p>
+            </div>
+          )}
         </div>
       </main>
       <Footer onScrollTop={scrollToTop} />

@@ -209,7 +209,7 @@ const Supporters = () => {
               Our Supporters
             </h1>
             <p className="font-body text-slate-500 font-medium max-w-xl mx-auto">
-              サーバーの運営を支えてくれている素晴らしいメンバーたちです。<br className="hidden md:inline"/>
+              サーバーを支えてくれている素晴らしいメンバーたちです。<br className="hidden md:inline"/>
               彼らの支援によって、私たちは新しい冒険を作り続けることができます。
             </p>
           </div>

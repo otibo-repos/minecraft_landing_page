@@ -53,7 +53,7 @@ LP（Join Landing）に対して、技術SEO・オンページ・構造化デー
    - 既存の robots.txt/sitemap.xml/canonical の有無を確認
 2. 技術SEO
    - `public/robots.txt` と `public/sitemap.xml` の作成/更新
-   - canonical/hreflang/noindex のポリシー決定と実装
+   - canonical/hreflang/noindex の方針決定と実装
 3. On-Page
    - title/description の最適化（1ページ1テーマ）
    - 見出しの階層整理（H1は1つ）

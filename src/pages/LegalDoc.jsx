@@ -1,14 +1,8 @@
 import React from "react";
-import { Navigate, useParams } from "react-router-dom";
-import LegalDocPage from "../legal/LegalDocPage";
-import { legalDocs } from "../legal/config";
+import { Navigate } from "react-router-dom";
 
 const LegalDoc = () => {
-  const { docKey } = useParams();
-  if (!docKey || !legalDocs[docKey]) {
-    return <Navigate to="/legal/terms" replace />;
-  }
-  return <LegalDocPage docKey={docKey} />;
+  return <Navigate to="/legal" replace />;
 };
 
 export default LegalDoc;

@@ -23,6 +23,7 @@ import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import { homeHeroImages } from "../data/lpImages";
 import Seo from "../components/Seo";
+import { createDiscordOAuthState } from "../utils/discordAuth";
 
 const Membership = () => {
   const [user, setUser] = useState(() => {
@@ -81,6 +82,7 @@ const Membership = () => {
         const res = await fetch("/discord-oauth", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify({ code }),
         });
         if (!res.ok) {
@@ -111,13 +113,14 @@ const Membership = () => {
   const beginDiscordLogin = () => {
     trackEvent("login_start", { provider: "discord" });
     const returnTo = `${window.location.pathname}${window.location.search}`;
+    const state = createDiscordOAuthState(returnTo || "/membership");
     const params = new URLSearchParams({
       client_id: import.meta.env.VITE_DISCORD_CLIENT_ID || "",
       response_type: "code",
       scope: "identify guilds.join",
       redirect_uri: redirectUriClient,
       prompt: "consent",
-      state: returnTo || "/membership",
+      state,
     });
     window.location.href = `https://discord.com/oauth2/authorize?${params.toString()}`;
   };
@@ -138,11 +141,16 @@ const Membership = () => {
     try {
       const res = await fetch("/create-portal-session", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ discord_user_id: user.id }),
+        credentials: "include",
       });
       if (!res.ok) {
         const text = await res.text();
+        if (res.status === 401) {
+          localStorage.removeItem("discord_user");
+          setUser(null);
+          setPortalError("認証が切れました。再度ログインしてください。");
+          return;
+        }
         if (res.status === 404) {
           setPortalError("Stripeの契約が見つかりませんでした。決済完了後に数分お待ちください。");
         } else {
@@ -436,7 +444,7 @@ const Membership = () => {
               専用のカラーとロールで、コミュニティ内での存在感が変わります。
               <br />
               <br />
-              限定チャンネルでは、アップデート情報をいち早くキャッチしたり、運営に直接フィードバックを送ることができます。
+              限定チャンネルでは、アップデート情報をいち早くキャッチしたり、チームへ直接フィードバックを送ることができます。
             </p>
             <div className="flex gap-2 justify-center md:justify-start">
               <motion.span
@@ -499,9 +507,6 @@ const Membership = () => {
             <div className="text-center mt-12 text-xs text-slate-400 font-medium max-w-lg mx-auto leading-relaxed">
               すべてのプランで同じ特典を提供します。適用期間及び更新方法が異なります。
               <br />
-              <span className="opacity-70">
-                ※ 返金ポリシーについては、規約をご確認ください。
-              </span>
             </div>
           </div>
         </section>

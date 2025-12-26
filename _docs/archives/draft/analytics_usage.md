@@ -34,7 +34,7 @@ related_prs: []
      window.gtag?.("event", name, { ...params });
    }
    ```
-3. `_docs/plan/Membership/roadmap/plan.md` M4 に計測ポリシー（イベント/パラメータ）を追記するか、後日 `guide/` へ昇格させる。
+3. `_docs/plan/Membership/roadmap/plan.md` M4 に計測方針（イベント/パラメータ）を追記するか、後日 `guide/` へ昇格させる。
 4. 追加イベント候補: `checkout_success` / `checkout_cancel`（URL の `checkout` パラメータで判定）、Discord 招待 CTA クリック。
 
 ## 有効化手順 (Sentry)

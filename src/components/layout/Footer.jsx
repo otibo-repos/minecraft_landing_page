@@ -15,10 +15,6 @@ const Footer = ({ onScrollTop }) => {
             </a>
         </div>
       <div className="flex justify-center gap-4 md:gap-6 text-xs md:text-sm font-bold text-slate-400 flex-wrap">
-        <FooterLink href="/legal/terms">利用規約</FooterLink>
-        <FooterLink href="/legal/tokusho">特定商取引法に基づく表記</FooterLink>
-        <FooterLink href="/legal/privacy">プライバシーポリシー</FooterLink>
-        <FooterLink href="/legal/refund">返金ポリシー</FooterLink>
         <FooterLink href="/membership">メンバーシップページ</FooterLink>
       </div>
       <div className="text-xs text-slate-300 font-bold">

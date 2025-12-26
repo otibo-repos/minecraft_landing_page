@@ -14,6 +14,7 @@ import { beginDiscordLogin } from "../utils/discordAuth";
 import PricingComponent from "../components/ui/PricingComponent";
 import Divider from "../components/ui/Divider";
 import Seo from "../components/Seo";
+import { createDiscordOAuthState } from "../utils/discordAuth";
 
 export const CheckboxCard = ({ 
   checked, 
@@ -89,7 +90,6 @@ export default function Contract() {
 
   const [agreements, setAgreements] = useState({
     discordRole: false,
-    terms: false,
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -114,6 +114,7 @@ export default function Contract() {
         const res = await fetch("/discord-oauth", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: "include",
           body: JSON.stringify({ code }),
         });
         if (!res.ok) {
@@ -150,13 +151,14 @@ export default function Contract() {
     trackEvent("login_start", { provider: "discord", context: "contract" });
     setOauthRedirecting(true);
     const returnTo = `${window.location.pathname}${window.location.search}`;
+    const state = createDiscordOAuthState(returnTo || "/membership");
     const params = new URLSearchParams({
       client_id: import.meta.env.VITE_DISCORD_CLIENT_ID || "",
       response_type: "code",
       scope: "identify guilds.join",
       redirect_uri: redirectUriClient,
       prompt: "consent",
-      state: returnTo || "/membership",
+      state,
     });
     window.location.href = `https://discord.com/oauth2/authorize?${params.toString()}`;
   };
@@ -180,7 +182,7 @@ export default function Contract() {
   };
 
   const handlePayment = async () => {
-    if (!user || !planParam || !agreements.terms || !agreements.discordRole) return;
+    if (!user || !planParam || !agreements.discordRole) return;
     
     setIsLoading(true);
     trackEvent("checkout_start", { priceType: planParam });
@@ -189,17 +191,26 @@ export default function Contract() {
       const res = await fetch("/create-checkout-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({
           priceType: planParam,
-          discord_user_id: user.id,
           avatar_url: user.avatar || null,
           consent_roles: agreements.discordRole,
-          consent_terms: agreements.terms,
         }),
       });
 
       if (!res.ok) {
         const text = await res.text();
+        if (res.status === 401) {
+          localStorage.removeItem("discord_user");
+          setUser(null);
+          setError("認証が切れました。メンバーシップページへ戻ります。");
+          setTimeout(() => {
+            window.location.href = "/membership";
+          }, 1800);
+          setIsLoading(false);
+          return;
+        }
         captureError(new Error("Checkout create failed"), { priceType: planParam, text });
         setError("決済セッションの作成に失敗しました。しばらくしてからもう一度お試しください。");
         setIsLoading(false);
@@ -217,7 +228,7 @@ export default function Contract() {
     }
   };
 
-  const isPayable = agreements.terms && agreements.discordRole && !isLoading;
+  const isPayable = agreements.discordRole && !isLoading;
 
   if (!user) {
     return (
@@ -370,66 +381,6 @@ export default function Contract() {
                       </div>
                     </label>
 
-                    <label 
-                      className={`
-                        group flex items-start gap-4 p-5 rounded-2xl border-2 transition-all cursor-pointer select-none
-                        ${agreements.terms 
-                          ? 'border-[#5fbb4e] bg-[#ecfdf5]/30' 
-                          : 'border-slate-200 bg-white hover:border-slate-300'
-                        }
-                      `}
-                    >
-                      <div className="relative mt-0.5">
-                        <input 
-                          type="checkbox" 
-                          className="peer sr-only" 
-                          checked={agreements.terms}
-                          onChange={() => toggleAgreement('terms')}
-                        />
-                        <div className={`
-                          w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all duration-200
-                          ${agreements.terms 
-                            ? 'bg-[#5fbb4e] border-[#5fbb4e]' 
-                            : 'bg-white border-slate-300 group-hover:border-slate-400'
-                          }
-                        `}>
-                          <Check size={16} className="text-white" strokeWidth={4} />
-                        </div>
-                      </div>
-                      
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="font-display font-bold text-slate-800 text-lg">
-                            利用規約への同意
-                          </span>
-                          <span className="text-[10px] font-bold bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full uppercase tracking-wide">
-                            必須
-                          </span>
-                        </div>
-                        <div className="font-body text-slate-500 text-sm leading-relaxed">
-                          <a
-                            href="/legal/terms"
-                            className="text-[#5fbb4e] underline hover:text-[#469e38]"
-                            onClick={(e) => e.stopPropagation()}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            利用規約
-                          </a>
-                          および
-                          <a
-                            href="/legal/privacy"
-                            className="text-[#5fbb4e] underline hover:text-[#469e38]"
-                            onClick={(e) => e.stopPropagation()}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            プライバシーポリシー
-                          </a>
-                          に同意します。これはデジタルコンテンツの購入であることを理解しています。
-                        </div>
-                      </div>
-                    </label>
                   </div>
                 </div>
               </motion.div>
@@ -461,7 +412,7 @@ export default function Contract() {
                         <Loader2 className="animate-spin" />
                       ) : (
                         <>
-                          <span>{(agreements.terms && agreements.discordRole) ? "Stripeで決済する" : "同意が必要"}</span>
+                          <span>{agreements.discordRole ? "Stripeで決済する" : "同意が必要"}</span>
                           <ArrowRight size={20} strokeWidth={3} />
                         </>
                       )}
