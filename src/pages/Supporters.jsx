@@ -88,7 +88,7 @@ const Supporters = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [user, setUser] = useState(() => {
     try {
-      const stored = localStorage.getItem("discord_user");
+      const stored = sessionStorage.getItem("discord_user");
       return stored ? JSON.parse(stored) : null;
     } catch {
       return null;
@@ -139,7 +139,7 @@ const Supporters = () => {
   }, [searchTerm]);
 
   const handleLogin = () => beginDiscordLogin();
-  const handleLogout = () => { localStorage.removeItem("discord_user"); setUser(null); };
+  const handleLogout = () => { sessionStorage.removeItem("discord_user"); setUser(null); };
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   const filtered = supporters.filter((s) =>

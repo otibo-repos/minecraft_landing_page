@@ -87,7 +87,7 @@ export default function Thanks() {
   const [copied, setCopied] = useState(false);
   const [user, setUser] = useState(() => {
     try {
-      return JSON.parse(localStorage.getItem("discord_user")) || null;
+      return JSON.parse(sessionStorage.getItem("discord_user")) || null;
     } catch {
       return null;
     }
@@ -151,7 +151,7 @@ export default function Thanks() {
 
   const isLoggedIn = !!(user && user.id);
   const handleLogout = () => {
-    localStorage.removeItem("discord_user");
+    sessionStorage.removeItem("discord_user");
     setUser(null);
   };
 

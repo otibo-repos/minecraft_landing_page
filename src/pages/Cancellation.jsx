@@ -48,7 +48,7 @@ export default function CancellationSuccessPage() {
   };
   const [user, setUser] = useState(() => {
     try {
-      return JSON.parse(localStorage.getItem("discord_user")) || null;
+      return JSON.parse(sessionStorage.getItem("discord_user")) || null;
     } catch {
       return null;
     }
@@ -114,7 +114,7 @@ export default function CancellationSuccessPage() {
   */
 
   const handleLogout = () => {
-    localStorage.removeItem("discord_user");
+    sessionStorage.removeItem("discord_user");
     setUser(null);
   };
 

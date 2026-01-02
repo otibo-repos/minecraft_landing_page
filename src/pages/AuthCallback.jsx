@@ -25,13 +25,41 @@ const AuthCallback = () => {
 
     const targetPath = parsedState.returnTo;
 
-    const targetUrl = new URL(targetPath, window.location.origin);
-    targetUrl.searchParams.set("code", code);
+    (async () => {
+      try {
+        const res = await fetch("/discord-oauth", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ code }),
+        });
+        if (!res.ok) {
+          const text = await res.text();
+          captureError(new Error("OAuth exchange failed"), { text });
+          window.location.replace("/membership?auth=failed");
+          return;
+        }
+        const data = await res.json();
+        if (data.user?.id) {
+          const discordUser = {
+            id: data.user.id,
+            name: data.user.username,
+            discriminator: data.user.discriminator,
+            avatar: data.user.avatar
+              ? `https://cdn.discordapp.com/avatars/${data.user.id}/${data.user.avatar}.png`
+              : null,
+          };
+          sessionStorage.setItem("discord_user", JSON.stringify(discordUser));
+        }
+      } catch (err) {
+        captureError(err, { stage: "oauth_callback" });
+        window.location.replace("/membership?auth=failed");
+        return;
+      }
 
-    const checkout = url.searchParams.get("checkout");
-    if (checkout) targetUrl.searchParams.set("checkout", checkout);
-
-    window.location.replace(targetUrl.toString());
+      const targetUrl = new URL(targetPath, window.location.origin);
+      window.location.replace(targetUrl.toString());
+    })();
   }, [location.key]);
 
   return (

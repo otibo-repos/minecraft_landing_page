@@ -77,9 +77,16 @@ export default function Contract() {
   const contractTitle = "プラン申し込み";
   const contractDescription =
     "メンバーシップの申し込み前に条件を確認し、決済へ進みます。";
+  const mockUser = {
+    name: "Supporter",
+    discriminator: "0000",
+    avatar:
+      "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f464.svg",
+  };
+  const mockPlanParam = "sub_monthly";
 
   const [user, setUser] = useState(() => {
-    const stored = localStorage.getItem("discord_user");
+    const stored = sessionStorage.getItem("discord_user");
     try {
       const parsed = stored ? JSON.parse(stored) : null;
       return parsed && parsed.id ? parsed : null;
@@ -95,6 +102,9 @@ export default function Contract() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [oauthRedirecting, setOauthRedirecting] = useState(false);
+  const displayUser = user || mockUser;
+  const displayPlanParam = planParam || mockPlanParam;
+  const hasRealData = !!user && !!planParam;
 
   const appBaseUrl = import.meta.env.VITE_APP_BASE_URL || window.location.origin;
   const redirectUriClient = import.meta.env.VITE_DISCORD_REDIRECT_URI || `${appBaseUrl}/auth/callback`;
@@ -136,7 +146,7 @@ export default function Contract() {
               ? `https://cdn.discordapp.com/avatars/${data.user.id}/${data.user.avatar}.png`
               : null,
           };
-          localStorage.setItem("discord_user", JSON.stringify(discordUser));
+          sessionStorage.setItem("discord_user", JSON.stringify(discordUser));
           setUser(discordUser);
           trackEvent("login_success", { provider: "discord", context: "contract" });
         }
@@ -163,6 +173,8 @@ export default function Contract() {
     window.location.href = `https://discord.com/oauth2/authorize?${params.toString()}`;
   };
 
+  // Portfolio: bypass access gate for /contract.
+  /*
   useEffect(() => {
     if (!planParam) {
       window.location.replace("/membership");
@@ -176,6 +188,7 @@ export default function Contract() {
       return;
     }
   }, [user, planParam]);
+  */
 
   const toggleAgreement = (key) => {
     setAgreements((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -202,7 +215,7 @@ export default function Contract() {
       if (!res.ok) {
         const text = await res.text();
         if (res.status === 401) {
-          localStorage.removeItem("discord_user");
+          sessionStorage.removeItem("discord_user");
           setUser(null);
           setError("認証が切れました。メンバーシップページへ戻ります。");
           setTimeout(() => {
@@ -228,38 +241,7 @@ export default function Contract() {
     }
   };
 
-  const isPayable = agreements.discordRole && !isLoading;
-
-  if (!user) {
-    return (
-      <>
-        <Seo
-          title={contractTitle}
-          description={contractDescription}
-          path="/contract"
-          type="website"
-          noIndex
-        />
-        <div className="min-h-screen flex items-center justify-center bg-[#f0f9ff]">
-          <div className="text-center space-y-3">
-            {error ? (
-              <>
-                <div className="text-red-600 font-black text-lg">{error}</div>
-                <div className="text-sm text-slate-500">数秒後に /membership へ戻ります。</div>
-              </>
-            ) : (
-              <>
-                <Loader2 className="animate-spin w-12 h-12 text-[#5fbb4e] mx-auto mb-4" />
-                <p className="text-slate-600 font-bold">
-                  {oauthRedirecting ? "Discord認証へ移動しています..." : "ページを準備しています..."}
-                </p>
-              </>
-            )}
-          </div>
-        </div>
-      </>
-    );
-  }
+  const isPayable = hasRealData && agreements.discordRole && !isLoading;
 
   // --- Render (New UI) ---
   const containerVariants = {
@@ -286,7 +268,6 @@ export default function Contract() {
         description={contractDescription}
         path="/contract"
         type="website"
-        noIndex
       />
       <style>{`
         /* Align fonts with membership page */
@@ -297,10 +278,10 @@ export default function Contract() {
       `}</style>
 
       <Header 
-        isLoggedIn={true} 
-        user={user} 
+        isLoggedIn={!!displayUser} 
+        user={displayUser} 
         onLogin={beginDiscordLogin} 
-        onLogout={() => { localStorage.removeItem("discord_user"); setUser(null); }} 
+        onLogout={() => { sessionStorage.removeItem("discord_user"); setUser(null); }} 
         onScrollTop={() => window.scrollTo(0, 0)} 
         brandHref="/membership"
       />
@@ -320,7 +301,7 @@ export default function Contract() {
             <motion.div variants={itemVariants} className="lg:col-span-5 order-2 lg:order-1">
               <div className="sticky top-28">
                 <PricingComponent
-                  initialPlanKey={planParam}
+                  initialPlanKey={displayPlanParam}
                   hideCTA
                   compact
                 />

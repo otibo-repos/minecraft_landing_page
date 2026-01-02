@@ -27,7 +27,7 @@ import { createDiscordOAuthState } from "../utils/discordAuth";
 
 const Membership = () => {
   const [user, setUser] = useState(() => {
-    const stored = localStorage.getItem("discord_user");
+    const stored = sessionStorage.getItem("discord_user");
     try {
       const parsed = stored ? JSON.parse(stored) : null;
       return parsed && parsed.id ? parsed : null;
@@ -55,7 +55,7 @@ const Membership = () => {
   }, [heroImages.length]);
 
   const handleLogout = () => {
-    localStorage.removeItem("discord_user");
+    sessionStorage.removeItem("discord_user");
     setUser(null);
   };
 
@@ -100,7 +100,7 @@ const Membership = () => {
               ? `https://cdn.discordapp.com/avatars/${data.user.id}/${data.user.avatar}.png`
               : null,
           };
-          localStorage.setItem("discord_user", JSON.stringify(discordUser));
+          sessionStorage.setItem("discord_user", JSON.stringify(discordUser));
           setUser(discordUser);
           trackEvent("login_success", { provider: "discord" });
         }
@@ -146,7 +146,7 @@ const Membership = () => {
       if (!res.ok) {
         const text = await res.text();
         if (res.status === 401) {
-          localStorage.removeItem("discord_user");
+          sessionStorage.removeItem("discord_user");
           setUser(null);
           setPortalError("認証が切れました。再度ログインしてください。");
           return;
