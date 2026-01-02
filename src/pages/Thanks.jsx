@@ -172,7 +172,7 @@ export default function Thanks() {
   }, [session]);
 
   const amountText = useMemo(() => {
-    if (!session) return formatCurrency(980, "JPY");
+    if (!session) return formatCurrency(500, "JPY");
     return formatCurrency(session.amount_total, session.currency);
   }, [session]);
 

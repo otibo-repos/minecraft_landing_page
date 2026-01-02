@@ -21,7 +21,7 @@ const Header = ({
   const hasNav = navItems.length > 0;
   const isMembershipPage =
     typeof window !== "undefined" &&
-    /^\/membership(\/|$)/.test(window.location.pathname);
+    /^\/(membership|thanks|cancellation)(\/|$)/.test(window.location.pathname);
   const loginIconSrc = isMembershipPage
     ? discordIcon
     : "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f4ac.svg";
