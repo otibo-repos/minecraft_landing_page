@@ -5,7 +5,8 @@ import {
   Check, 
   AlertCircle, 
   Loader2, 
-  ArrowRight
+  ArrowRight,
+  Users
 } from "lucide-react";
 import { trackEvent, captureError } from "../analytics";
 import Header from "../components/layout/Header";
@@ -97,6 +98,8 @@ export default function Contract() {
 
   const [agreements, setAgreements] = useState({
     discordRole: false,
+    showSupporterList: true,
+    termsAccepted: false,
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -195,11 +198,15 @@ export default function Contract() {
   };
 
   const handlePayment = async () => {
-    if (!user || !planParam || !agreements.discordRole) return;
-    
-    setIsLoading(true);
-    trackEvent("checkout_start", { priceType: planParam });
+    if (!agreements.discordRole || !agreements.termsAccepted) {
+      return;
+    }
 
+    setIsLoading(true);
+    trackEvent("checkout_start", { priceType: displayPlanParam });
+
+    // Portfolio mock: skip Stripe checkout, go directly to thanks page.
+    /*
     try {
       const res = await fetch("/create-checkout-session", {
         method: "POST",
@@ -239,9 +246,14 @@ export default function Contract() {
       setError("ネットワークエラーが発生しました。しばらくしてからもう一度お試しください。");
       setIsLoading(false);
     }
+    */
+    window.location.href = "/thanks";
   };
 
-  const isPayable = hasRealData && agreements.discordRole && !isLoading;
+  const isPayable =
+    agreements.discordRole &&
+    agreements.termsAccepted &&
+    !isLoading;
 
   // --- Render (New UI) ---
   const containerVariants = {
@@ -322,6 +334,17 @@ export default function Contract() {
               {/* Agreements Section */}
               <motion.div variants={itemVariants} className="space-y-4">
                 <div className="flex flex-col gap-4">
+                  <CheckboxCard
+                    checked={agreements.showSupporterList}
+                    onChange={() => toggleAgreement("showSupporterList")}
+                    icon={<Users size={20} />}
+                    title="支援者一覧に表示する"
+                    description="支援者一覧に名前を掲載します（後からいつでも変更できます）。"
+                    tag="任意"
+                  />
+
+                  <Divider className="border-slate-200" />
+
                   <div className="pt-2 space-y-3">
                     <label 
                       className={`
@@ -362,6 +385,44 @@ export default function Contract() {
                       </div>
                     </label>
 
+                    <label
+                      className={`
+                        group flex items-start gap-4 p-5 rounded-2xl border-2 transition-all cursor-pointer select-none
+                        ${agreements.termsAccepted
+                          ? 'border-[#5fbb4e] bg-[#ecfdf5]/40'
+                          : 'border-slate-200 bg-white hover:border-slate-300'
+                        }
+                      `}
+                    >
+                      <div className="relative mt-0.5">
+                        <input
+                          type="checkbox"
+                          className="peer sr-only"
+                          checked={agreements.termsAccepted}
+                          onChange={() => toggleAgreement("termsAccepted")}
+                        />
+                        <div className={`
+                          w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all duration-200
+                          ${agreements.termsAccepted
+                            ? 'bg-[#5fbb4e] border-[#5fbb4e]'
+                            : 'bg-white border-slate-300 group-hover:border-slate-400'
+                          }
+                        `}>
+                          <Check size={16} className="text-white" strokeWidth={4} />
+                        </div>
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="font-display font-bold text-slate-800 text-lg">利用規約に同意する</span>
+                          <span className="text-[10px] font-bold bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full uppercase tracking-wide">
+                            必須
+                          </span>
+                        </div>
+                        <p className="font-body text-slate-500 text-sm leading-tight">
+                          これはモックであり、実際の規約同意は求めていない。
+                        </p>
+                      </div>
+                    </label>
                   </div>
                 </div>
               </motion.div>
@@ -393,7 +454,7 @@ export default function Contract() {
                         <Loader2 className="animate-spin" />
                       ) : (
                         <>
-                          <span>{agreements.discordRole ? "Stripeで決済する" : "同意が必要"}</span>
+                          <span>{isPayable ? "Stripeで決済する" : "同意が必要"}</span>
                           <ArrowRight size={20} strokeWidth={3} />
                         </>
                       )}

@@ -258,10 +258,10 @@ export default function CancellationSuccessPage() {
             transition={{ delay: 0.2 }}
             className="mb-10"
           >
-            <h1 className="font-display text-3xl md:text-4xl font-bold text-slate-800 mb-4 tracking-tight">
-              We're sad to see you go
+            <h1 className="font-display text-4xl md:text-5xl font-black text-slate-800 mb-4 tracking-tight">
+              またお待ちしております
             </h1>
-            <p className="font-body text-slate-500 font-bold text-lg leading-relaxed max-w-sm mx-auto">
+            <p className="font-body text-slate-500 font-bold text-sm md:text-base leading-relaxed max-w-sm mx-auto">
               解約手続きが完了しました。<br/>
               これまでご支援いただき、<br/>
               本当にありがとうございました。
@@ -287,7 +287,7 @@ export default function CancellationSuccessPage() {
                     </h3>
                     <div className="flex items-center gap-2 mt-1">
                       <span className="inline-block w-2 h-2 rounded-full bg-slate-400" />
-                      <span className="text-sm font-bold text-slate-400">Cancelled</span>
+                      <span className="text-sm font-bold text-slate-400">キャンセル済み</span>
                     </div>
                   </div>
                   
@@ -297,9 +297,9 @@ export default function CancellationSuccessPage() {
                       <Clock size={16} />
                     </div>
                     <div>
-                      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Remaining Access</div>
+                      <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">残りのアクセス期間</div>
                       <div className="font-display font-bold text-slate-700 text-sm">
-                        {daysLeft} Days Left
+                        {daysLeft} 日
                       </div>
                     </div>
                   </div>
