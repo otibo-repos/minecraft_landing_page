@@ -17,6 +17,10 @@ import Divider from "../components/ui/Divider";
 import Seo from "../components/Seo";
 import { createDiscordOAuthState } from "../utils/discordAuth";
 
+const checkboxTitleOffsets = {
+  "支援者一覧に表示する": "-translate-x-[0.03em]",
+};
+
 export const CheckboxCard = ({ 
   checked, 
   onChange, 
@@ -24,53 +28,57 @@ export const CheckboxCard = ({
   title, 
   description,
   tag 
-}) => (
-  <div 
-    onClick={onChange}
-    className={`
-      group relative flex items-center gap-4 p-4 pr-6 rounded-2xl border transition-all duration-200 cursor-pointer select-none
-      ${checked 
-        ? 'bg-white border-slate-300 shadow-[0_4px_0_#e2e8f0] translate-y-[-2px]' 
-        : 'bg-slate-50 border-slate-200 opacity-80 hover:opacity-100'
-      }
-    `}
-  >
-    <div className={`
-      w-12 h-12 rounded-xl flex items-center justify-center transition-colors duration-300
-      ${checked ? 'bg-[#5865F2] text-white' : 'bg-slate-200 text-slate-400'}
-    `}>
-      {checked ? icon : <div className="grayscale opacity-50">{icon}</div>}
-    </div>
+}) => {
+  const titleOffsetClass = checkboxTitleOffsets[title] ?? "";
 
-    <div className="flex-1">
-      <div className="flex items-center gap-2 mb-1">
-        <h4 className={`font-display font-bold text-base ${checked ? 'text-slate-800' : 'text-slate-500'}`}>
-          {title}
-        </h4>
-        {tag && (
-          <span className="text-[10px] font-black bg-[#5fbb4e]/10 text-[#5fbb4e] px-2 py-0.5 rounded-full uppercase tracking-wider">
-            {tag}
-          </span>
-        )}
+  return (
+    <div 
+      onClick={onChange}
+      className={`
+        group relative flex items-center gap-4 p-4 pr-6 rounded-2xl border transition-all duration-200 cursor-pointer select-none
+        ${checked 
+          ? 'bg-white border-slate-300 shadow-[0_4px_0_#e2e8f0] translate-y-[-2px]' 
+          : 'bg-slate-50 border-slate-200 opacity-80 hover:opacity-100'
+        }
+      `}
+    >
+      <div className={`
+        w-12 h-12 rounded-xl flex items-center justify-center transition-colors duration-300
+        ${checked ? 'bg-[#5865F2] text-white' : 'bg-slate-200 text-slate-400'}
+      `}>
+        {checked ? icon : <div className="grayscale opacity-50">{icon}</div>}
       </div>
-      <p className="font-body text-xs md:text-sm text-slate-500 leading-tight">
-        {description}
-      </p>
-    </div>
 
-    <div className={`
-      w-12 h-7 rounded-full p-1 transition-colors duration-300 flex items-center
-      ${checked ? 'bg-[#5fbb4e]' : 'bg-slate-300'}
-    `}>
-      <motion.div 
-        layout
-        className="w-5 h-5 bg-white rounded-full shadow-sm"
-        animate={{ x: checked ? 20 : 0 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      />
+      <div className="flex-1">
+        <div className="flex items-center gap-2 mb-1">
+          <h4 className={`font-display font-bold text-base inline-block ${titleOffsetClass} ${checked ? 'text-slate-800' : 'text-slate-500'}`}>
+            {title}
+          </h4>
+          {tag && (
+            <span className="text-[10px] font-black bg-[#5fbb4e]/10 text-[#5fbb4e] px-2 py-0.5 rounded-full uppercase tracking-wider">
+              {tag}
+            </span>
+          )}
+        </div>
+        <p className="font-body text-xs md:text-sm text-slate-500 leading-tight">
+          {description}
+        </p>
+      </div>
+
+      <div className={`
+        w-12 h-7 rounded-full p-1 transition-colors duration-300 flex items-center
+        ${checked ? 'bg-[#5fbb4e]' : 'bg-slate-300'}
+      `}>
+        <motion.div 
+          layout
+          className="w-5 h-5 bg-white rounded-full shadow-sm"
+          animate={{ x: checked ? 20 : 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default function Contract() {
   const [searchParams] = useSearchParams();
@@ -323,7 +331,7 @@ export default function Contract() {
             {/* Right Col: Agreements & Action */}
             <div className="lg:col-span-7 order-1 lg:order-2 space-y-8">
               <motion.div variants={itemVariants} className="mb-2 text-left">
-                <h1 className="font-display text-3xl md:text-4xl font-bold text-slate-900 mb-2">
+                <h1 className="font-display text-3xl md:text-4xl font-bold text-slate-900 mb-2 -translate-x-[0.04em]">
                   サポート内容の確認
                 </h1>
                 <p className="font-body text-slate-500 font-bold">
@@ -374,7 +382,7 @@ export default function Contract() {
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="font-display font-bold text-slate-800 text-lg">Discordロールの付与</span>
+                          <span className="font-display font-bold text-slate-800 text-lg inline-block -translate-x-[0.02em]">Discordロールの付与</span>
                           <span className="text-[10px] font-bold bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full uppercase tracking-wide">
                             必須
                           </span>
@@ -413,7 +421,7 @@ export default function Contract() {
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="font-display font-bold text-slate-800 text-lg">利用規約に同意する</span>
+                          <span className="font-display font-bold text-slate-800 text-lg inline-block -translate-x-[0.025em]">利用規約に同意する</span>
                           <span className="text-[10px] font-bold bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full uppercase tracking-wide">
                             必須
                           </span>

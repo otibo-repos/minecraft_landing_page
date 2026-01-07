@@ -12,7 +12,7 @@ import {
   CreditCard,
   User,
   LogOut,
-  Sparkles, // 追加
+  Sparkles,
 } from "lucide-react";
 import { trackEvent, captureError } from "../analytics";
 import SupporterTicker from "../components/ui/SupporterTicker";
@@ -435,7 +435,7 @@ const Membership = () => {
 
         <section className="container mx-auto px-4 py-12 flex flex-col md:flex-row items-center gap-12 max-w-5xl mb-24">
           <div className="flex-1 space-y-6 text-center md:text-left">
-            <h2 className="text-4xl md:text-5xl font-black text-slate-800 tracking-tight">
+            <h2 className="text-4xl md:text-5xl font-black text-slate-800 tracking-tight -translate-x-[0.1em]">
               サポーターの証が、
               <br />
               <span className="text-[#5865F2]">あなたを示す。</span>

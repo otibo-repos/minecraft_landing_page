@@ -218,10 +218,11 @@ const Hero = () => {
 
       <div className="max-w-screen-xl mx-auto px-4 md:px-8 relative z-10 grid md:grid-cols-12 gap-12 items-center">
         <div className="md:col-span-6 text-center md:text-left pt-4 md:pt-0">
-          <h3 className="text-xs font-bold tracking-[0.2em] text-[#5fbb4e] uppercase mt-3 mb-2">Since 2019</h3>
+          <h3 className="text-xs font-bold tracking-[0.2em] translate-x-[0.13em] text-[#5fbb4e] uppercase mt-3 mb-2">Since 2019</h3>
           <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-[#1e293b] tracking-tight mt-3 mb-4 md:mb-6">
-            あなたらしく<br/>遊べる場所が、<br/>
-            <span className="text-[#5fbb4e]">ここにある。</span>
+            <span className="block md:-translate-x-[0.1em]">あなたらしく</span>
+            <span className="block md:-translate-x-[0.06em] translate-x-[0.33em]">遊べる場所が、</span>
+            <span className="block text-[#5fbb4e] md:-translate-x-[0.115em] translate-x-[0.33em]">ここにある。</span>
           </h1>
           <p className="font-body text-[#64748b] text-base md:text-xl leading-relaxed max-w-lg mx-auto md:mx-0 mb-6 md:mb-8">
             建築に没頭する人、冒険を楽しむ人、<br/>
@@ -293,12 +294,12 @@ const Hero = () => {
               </div>
 
               {/* Decorative Icons - Hidden on very small screens to reduce clutter */}
-              <div className="hidden sm:block absolute top-10 left-10 text-[#5fbb4e] opacity-20 transform -rotate-12 animate-pulse">
+              {/* <div className="hidden sm:block absolute top-10 left-10 text-[#5fbb4e] opacity-20 transform -rotate-12 animate-pulse">
                 <Sprout size={48} />
               </div>
               <div className="hidden sm:block absolute bottom-20 right-10 text-[#f59e0b] opacity-20 transform rotate-12 animate-pulse">
                 <Star size={48} />
-              </div>
+              </div> */}
            </div>
         </div>
       </div>
@@ -609,7 +610,7 @@ const RefinedFeatures = () => {
           </div>
           
           <div>
-            <h3 className="font-display font-black text-3xl md:text-4xl text-[#1e293b] mt-3">
+            <h3 className="font-display font-black text-3xl md:text-4xl text-[#1e293b] mt-3 -translate-x-[0.04em]">
               日常の合間に、<br/>
               気軽な冒険を。
             </h3>
@@ -626,7 +627,7 @@ const RefinedFeatures = () => {
         {/* --- METAPHOR 2: The "Clan Banners" (Belonging) --- */}
         <div className="grid md:grid-cols-2 gap-12 md:gap-24 items-center">
           <div className="order-2 md:order-1">
-            <h3 className="font-display font-black text-3xl md:text-4xl text-[#1e293b] mt-3">
+            <h3 className="font-display font-black text-3xl md:text-4xl text-[#1e293b] mt-3 -translate-x-[0.06em]">
               グループで、<br/>
               <span className="text-indigo-600">仲間と繋がる。</span>
             </h3>
@@ -701,7 +702,7 @@ const RefinedFeatures = () => {
                   <Headset size={24} className="md:w-8 md:h-8" />
                 </div>
                 <div className="flex-grow">
-                  <h3 className="font-display font-black text-xl md:text-2xl text-[#1e293b] mt-3 mb-2 md:mb-4">
+                  <h3 className="font-display font-black text-xl md:text-2xl text-[#1e293b] mt-3 mb-2 md:mb-4 -translate-x-[0.03em]">
                     安心のサポート体制
                   </h3>
                   <p className="font-body text-[#64748b] leading-relaxed mb-6">
@@ -798,7 +799,7 @@ const Stories = () => {
         <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start mb-8 md:mb-16">
           <div>
             <h3 className="text-xs font-bold tracking-[0.2em] text-[#5fbb4e] uppercase mt-3 mb-2">Player Stories</h3>
-            <h2 className="font-display font-black text-3xl md:text-4xl lg:text-5xl text-[#1e293b] mt-3">
+            <h2 className="font-display font-black text-3xl md:text-4xl lg:text-5xl text-[#1e293b] mt-3 -translate-x-[0.05em]">
               参加者の声
             </h2>
             <p className="text-[#64748b] font-body text-base md:text-lg leading-relaxed mt-4 md:mt-6">

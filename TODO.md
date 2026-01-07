@@ -1,7 +1,7 @@
 # Project Task Management Rules
 
 ## 0. System Metadata
-- **Current Max ID**: `Next ID No: 22` (※タスク追加時にインクリメント必須)
+- **Current Max ID**: `Next ID No: 23` (※タスク追加時にインクリメント必須)
 - **ID Source of Truth**: このファイルの `Next ID No` 行が、全プロジェクトにおける唯一のID発番元である。
 
 ## 1. Task Lifecycle (State Machine)
@@ -188,6 +188,19 @@ ID生成およびタイトルのプレフィックスには以下のみを使用
 ---
 
 ## Backlog
+- **Title**: [Enhance] 見出しの光学左揃え補正を適用
+- **ID**: UI-Enhance-23
+- **Priority**: P2
+- **Size**: XS
+- **Area**: UI
+- **Dependencies**: []
+- **Goal**: `Membership.jsx`/`JoinLanding.jsx`/`Checkout.jsx` の指定見出しが本文の左端に視覚的に揃っている。
+- **Steps**:
+  1. [ ] 対象の見出し要素と本文要素の現状クラスを確認する
+  2. [ ] 見出しごとの差分に応じた左方向の補正（margin/translate など）を追加する
+  3. [ ] 画面表示で本文との左揃えが改善していることを確認する
+- **Description**: 見出しの文字ごとの差による視覚的な左ズレを個別に補正する。
+- **Plan**: None
 
 ---
 
