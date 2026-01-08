@@ -26,7 +26,7 @@ const CommunityGoalWidget = () => (
         </div>
       ))}
       <div
-        className="w-8 h-8 rounded-full border-2 border-white bg-[#5fbb4e] flex items-center justify-center text-white text-[10px] font-black relative z-10 shadow-sm"
+        className="w-8 h-8 rounded-full border-2 border-white bg-[#5fbb4e] flex items-center justify-center text-white text-[10px] font-semibold relative z-10 shadow-sm"
         style={{ marginLeft: -12 }}
       >
         +42
@@ -35,10 +35,10 @@ const CommunityGoalWidget = () => (
 
     <div className="flex flex-col">
       <div className="flex items-center gap-2">
-        <span className="text-xs font-bold text-slate-600 group-hover:text-slate-800 transition-colors">
+        <span className="text-xs font-semibold text-slate-600 group-hover:text-slate-800 transition-colors">
           今月の維持費ゴール
         </span>
-        <span className="text-xs font-black text-[#5fbb4e]">78%</span>
+        <span className="text-xs font-semibold text-[#5fbb4e]">78%</span>
       </div>
       <div className="w-32 h-1.5 bg-slate-100 rounded-full overflow-hidden mt-1">
         <motion.div

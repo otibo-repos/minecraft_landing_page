@@ -203,8 +203,6 @@ export default function Thanks() {
         type="website"
       />
       <style>{`
-        .font-display { font-family: 'Outfit', sans-serif; }
-        .font-body { font-family: 'M PLUS Rounded 1c', sans-serif; }
         .text-gradient-gold {
           background: linear-gradient(135deg, #F59E0B 0%, #FCD34D 50%, #F59E0B 100%);
           -webkit-background-clip: text;
@@ -244,7 +242,7 @@ export default function Thanks() {
               <h1 className="font-display text-2xl md:text-3xl font-black text-slate-800 mb-3">
                 決済情報を確認できませんでした
               </h1>
-              <p className="font-body text-slate-500 font-bold mb-6">
+              <p className="font-body text-slate-500 font-semibold mb-6">
                 {error || "このページは決済完了後に表示されます。"}
               </p>
               <a
@@ -312,7 +310,7 @@ export default function Thanks() {
               Thank You,<br/>
               <span className="text-gradient-gold">{displayUser.name || "Supporter"}!</span>
             </h1>
-            <p className="font-body text-slate-500 font-bold text-lg md:text-xl max-w-sm mx-auto">
+            <p className="font-body text-slate-500 font-semibold text-lg md:text-xl max-w-sm mx-auto">
               ご支援ありがとうございます！<br/>
               あなたのサポートがサーバーの力になります。
             </p>
@@ -340,15 +338,15 @@ export default function Thanks() {
                   <>
                     <div className="flex justify-between items-start mb-6">
                       <div className="text-left">
-                        <span className="inline-block px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 font-black text-[10px] uppercase tracking-wider mb-2">
+                        <span className="inline-block px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 font-bold text-[10px] uppercase tracking-wider mb-2">
                           Official Supporter
                         </span>
-                        <h3 className="font-display font-bold text-xl text-slate-800">
+                        <h3 className="font-display font-black text-xl text-slate-800">
                           {planName}
                         </h3>
                       </div>
                       <div className="text-right">
-                        <div className="font-display font-black text-2xl text-[#5fbb4e]">
+                        <div className="font-display font-bold text-2xl text-[#5fbb4e]">
                           {amountText}
                         </div>
                         <div className="text-xs font-bold text-slate-400">Paid</div>
@@ -411,8 +409,8 @@ export default function Thanks() {
                   <MessageCircle size={24} fill="currentColor" className="opacity-20 absolute" />
                   <MessageCircle size={24} className="relative z-10" />
                 </div>
-                <h3 className="font-display font-bold text-slate-800 mb-1">Check Discord</h3>
-                <p className="text-xs text-slate-500 font-bold mb-4">
+                <h3 className="font-display font-black text-slate-800 mb-1">Check Discord</h3>
+                <p className="text-xs text-slate-500 font-semibold mb-4">
                   ロールが付与されました！<br/>限定チャンネルへようこそ。
                 </p>
                 <a 

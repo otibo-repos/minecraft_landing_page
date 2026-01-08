@@ -60,7 +60,7 @@ const LegalDocPage = ({ docKey }) => {
           <h2
             id={id}
             {...props}
-            className="scroll-mt-24 text-2xl font-black text-slate-800 mt-10 mb-3"
+            className="scroll-mt-24 text-2xl font-bold text-slate-800 mt-10 mb-3"
           >
             {children}
           </h2>
@@ -86,7 +86,7 @@ const LegalDocPage = ({ docKey }) => {
         return (
           <a
             {...props}
-            className="text-[#5865F2] font-semibold underline underline-offset-2"
+            className="text-[#5865F2] font-bold underline underline-offset-2"
             target={props.href?.startsWith("http") ? "_blank" : undefined}
             rel="noreferrer"
           />
@@ -131,7 +131,7 @@ const LegalDocPage = ({ docKey }) => {
         <div className="flex items-center justify-start gap-3 mb-5">
           <a
             href="/"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-[#5fbb4e] no-print"
+            className="inline-flex items-center gap-2 text-sm font-bold text-slate-600 hover:text-[#5fbb4e] no-print"
           >
             <ArrowLeft size={18} />
             ホームへ戻る
@@ -178,7 +178,7 @@ const LegalDocPage = ({ docKey }) => {
             </>
           ) : (
             <div className="py-16 text-center">
-              <p className="text-base md:text-lg font-semibold text-slate-600">
+              <p className="text-base md:text-lg font-bold text-slate-600">
                 現在はご案内を行っていません。
               </p>
             </div>

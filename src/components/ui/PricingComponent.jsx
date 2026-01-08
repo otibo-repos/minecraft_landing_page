@@ -221,13 +221,13 @@ const PricingComponent = ({
                 )}
 
                 <div className={`${compact ? "mb-7" : "mb-8"} text-center relative z-10`}>
-                  <h3 className={`font-black text-2xl mb-3 uppercase tracking-wide ${plan.textColor}`}>
+                  <h3 className={`font-black text-2xl mb-3 uppercase tracking-wide font-outfit ${plan.textColor}`}>
                     {plan.label}
                     {PRICING_COPY.planCard.planLabelSuffix}
                   </h3>
-                  <div className="flex items-baseline justify-center gap-1 text-slate-800">
+                  <div className="flex items-baseline justify-center gap-1 text-slate-800 font-outfit">
                     <span className="text-xl font-bold">{PRICING_COPY.planCard.pricePrefix}</span>
-                    <span className={`text-6xl font-black brand-font tracking-tighter ${plan.textColor}`}>
+                    <span className={`text-6xl font-black tracking-tighter font-outfit ${plan.textColor}`}>
                       {plan.price.toLocaleString()}
                     </span>
                     <span className="text-slate-400 font-bold text-sm">
@@ -253,7 +253,7 @@ const PricingComponent = ({
                       <div className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-white shadow-sm ${plan.iconBg} bg-gradient-to-br from-white/20 to-transparent`}>
                         <Check size={14} strokeWidth={4} />
                       </div>
-                      <span className="text-sm md:text-base">{feature}</span>
+                      <span className="text-small md:text-base">{feature}</span>
                     </motion.div>
                   ))}
                 </div>

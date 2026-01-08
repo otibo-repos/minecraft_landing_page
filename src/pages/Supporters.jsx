@@ -62,12 +62,12 @@ const SupporterCard = ({ supporter, index }) => (
         </div>
         
         <div className="flex flex-wrap gap-2 mb-3">
-          <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider ${supporter.bg} ${supporter.color}`}>
+          <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider ${supporter.bg} ${supporter.color}`}>
             {supporter.plan} Plan
           </span>
         </div>
 
-        <div className="text-[10px] text-slate-400 font-medium">
+        <div className="text-[10px] text-slate-400 font-bold">
           Joined: {supporter.joinedAt}
         </div>
       </div>
@@ -179,11 +179,6 @@ const Supporters = () => {
         type="website"
         noIndex
       />
-      <style>{`
-        .font-display { font-family: 'Outfit', sans-serif; }
-        .font-body { font-family: 'M PLUS Rounded 1c', sans-serif; }
-      `}</style>
-
       <Header
         isLoggedIn={!!user}
         user={user}
@@ -208,7 +203,7 @@ const Supporters = () => {
             <h1 className="font-display text-3xl md:text-4xl font-black text-slate-800 mb-4">
               Our Supporters
             </h1>
-            <p className="font-body text-slate-500 font-medium max-w-xl mx-auto">
+            <p className="font-body text-slate-500 font-semibold max-w-xl mx-auto">
               サーバーを支えてくれている素晴らしいメンバーたちです。<br className="hidden md:inline"/>
               彼らの支援によって、私たちは新しい冒険を作り続けることができます。
             </p>

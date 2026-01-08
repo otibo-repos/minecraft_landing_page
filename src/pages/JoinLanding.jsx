@@ -141,6 +141,7 @@ const Card = ({ children, className = '', delay = 0 }) => {
   );
 };
 
+// ヒーローのポラロイド写真風フレーム
 const PhotoFrame = ({
   caption,
   image,
@@ -181,7 +182,7 @@ const PhotoFrame = ({
       <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
     </div>
     {caption && (
-      <div className="text-center font-polaroid-caption text-slate-500 text-sm md:text-lg rotate-[-1deg]">
+      <div className="text-center font-polaroid-caption font-normal text-slate-500 text-sm md:text-lg rotate-[-1deg]">
         {caption}
       </div>
     )}
@@ -224,10 +225,10 @@ const Hero = () => {
             <span className="block md:-translate-x-[0.06em] translate-x-[0.33em]">遊べる場所が、</span>
             <span className="block text-[#5fbb4e] md:-translate-x-[0.115em] translate-x-[0.33em]">ここにある。</span>
           </h1>
-          <p className="font-body text-[#64748b] text-base md:text-xl leading-relaxed max-w-lg mx-auto md:mx-0 mb-6 md:mb-8">
+          <p className="font-normal text-[#64748b] text-base md:text-xl leading-relaxed max-w-lg mx-auto md:mx-0 mb-6 md:mb-8">
             建築に没頭する人、冒険を楽しむ人、<br/>
             雑談で夜を過ごす人。<br/>
-            200名が集まるこのサーバーでは、<br/>
+            200名が集まるこのサーバーでは、<br/>建築
             どんな遊び方も、自然に共存しています。
           </p>
           
@@ -344,7 +345,7 @@ const MemoryLane = () => {
                 </div>
                 <div className="bg-white p-8 rounded-sm shadow-sm border border-[#e2e8f0]">
                     <Quote className="w-6 h-6 text-[#5fbb4e] mb-4 opacity-50" />
-                    <p className="font-display text-lg leading-relaxed text-[#1e293b] mb-4">
+                    <p className="font-normal text-lg leading-relaxed text-[#1e293b] mb-4">
                         「またまたあり事はたった大変と云っですて、こういうがたをしかいうたでって一種を云えてしまったた。」
                     </p>
                     <div className="flex items-center gap-3">
@@ -380,7 +381,7 @@ const MemoryLane = () => {
                 </div>
                 <div className="bg-white p-8 rounded-sm shadow-sm border border-[#e2e8f0]">
                     <Quote className="w-6 h-6 text-[#5fbb4e] mb-4 opacity-50" />
-                    <p className="font-display text-lg leading-relaxed text-[#1e293b] mb-4">
+                    <p className="font-normal text-lg leading-relaxed text-[#1e293b] mb-4">
                         「権力からかつ張さんがそうしてされど訳ありあるん。嘉納さんはぴたり自分を考えでありなのなあるん。」
                     </p>
                     <div className="flex items-center gap-3">
@@ -484,7 +485,7 @@ const MemoryLane = () => {
                 </div>
                 <div className="bg-white p-8 rounded-sm shadow-sm border border-[#e2e8f0]">
                     <Quote className="w-6 h-6 text-[#5fbb4e] mb-4 opacity-50" />
-                    <p className="font-display text-lg leading-relaxed text-[#1e293b] mb-4">
+                    <p className="font-normal text-lg leading-relaxed text-[#1e293b] mb-4">
                         「さて大体ちょっと他人が落ちつけていたたば、いにしえのあり様はこれ様々、妨害がけっして吹聴のようです。」
                     </p>
                     <div className="flex items-center gap-3">
@@ -513,6 +514,65 @@ const MemoryLane = () => {
   );
 };
 
+const StoryCard = ({ author, text, avatarColor }) => (
+  <Card className="p-6 md:p-8 flex flex-col gap-4 relative overflow-hidden h-full">
+    <div className="absolute top-0 right-0 p-8 opacity-5">
+      <MessageCircle size={80} />
+    </div>
+    
+    <div className="flex items-center gap-4">
+      <div className={`w-12 h-12 md:w-14 md:h-14 rounded-full ${avatarColor} border-4 border-white shadow-sm flex items-center justify-center overflow-hidden shrink-0`}>
+        <span className="font-bold text-white text-lg md:text-xl">{author.charAt(0)}</span>
+      </div>
+      <div>
+        <div className="font-bold text-[#1e293b] text-base md:text-lg">{author}</div>
+      </div>
+    </div>
+    
+    <div className="relative">
+      <p className="font-body text-[#64748b] leading-relaxed italic text-sm md:text-base">
+        "{text}"
+      </p>
+    </div>
+  </Card>
+);
+
+const Stories = () => {
+  return (
+    <section id="reviews" className="py-20 md:py-24 bg-[#f8fafc] border-t border-[#e2e8f0]">
+      <div className="max-w-screen-xl mx-auto px-4 md:px-8">
+        <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start mb-8 md:mb-16">
+          <div>
+            <h3 className="text-xs font-bold tracking-[0.2em] text-[#5fbb4e] uppercase mt-3 mb-2">Player Stories</h3>
+            <h2 className="font-display font-black text-3xl md:text-4xl lg:text-5xl text-[#1e293b] mt-3 -translate-x-[0.05em]">
+              参加者の声
+            </h2>
+            <p className="text-[#64748b] font-normal text-base md:text-lg leading-relaxed mt-4 md:mt-6">
+              実際に参加している方々の感想です。<br/>
+              グループでの活動や日常の交流を通じて、<br/>
+              多くの繋がりが生まれています。
+            </p>
+          </div>
+          {/* Mobile: Vertical Stack, Desktop: Staggered Grid */}
+          <div className="flex flex-col gap-6 font-normal">
+             <StoryCard 
+               author="ユーザーA" 
+               avatarColor="bg-blue-400"
+               text="すなわち出事は主義も待って始めう、また結構幸福う中止らを西洋の世界を出だろ簡潔で権力に下働きに云ってくれたためを、無論たまらなくたのん。"
+               />
+             <div className="md:translate-x-8">
+               <StoryCard 
+                 author="ユーザーB" 
+                 avatarColor="bg-orange-400"
+                 text="いわゆる反駁はどんな手本の目標というますはませ、彼らかの人人間の例というなたくないと内談ありているでて、はなはだ何は漠然たる上岡田さんとしてでたらめですのをできるた。"
+               />
+             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 // --- Refined Feature Section (METAPHOR FOCUSED) ---
 
@@ -532,9 +592,9 @@ const RefinedFeatures = () => {
           <h3 className="text-xs font-bold tracking-[0.2em] text-[#5fbb4e] uppercase mt-3 mb-2">Why Choose Us?</h3>
           <h2 className="font-display font-black text-3xl md:text-5xl lg:text-6xl text-[#1e293b] mt-3">
             選ばれる<br/>
-            <span className="text-[#5fbb4e] inline-block transform bg-[#ecfdf5] px-2 md:px-4 py-1 rounded-lg border-2 border-[#5fbb4e]/20 mt-2">3 つの理由</span>
+            <span className="text-[#5fbb4e] inline-block transform bg-[#ecfdf5] px-2 md:px-4 py-1 rounded-lg border-2 border-[#5fbb4e]/20 mt-2">3つの理由</span>
           </h2>
-          <p className="text-[#64748b] font-body text-base md:text-xl leading-relaxed mt-4 md:mt-6">
+          <p className="text-[#64748b] font-normal text-base md:text-xl leading-relaxed mt-4 md:mt-6">
             義務もノルマもありません。<br/>
             繋がりを持つことも、一人で気ままに遊ぶことも。すべてはあなたの自由。<br/>
             私たちが用意するのは、選択肢と安心できる環境だけです。
@@ -557,7 +617,7 @@ const RefinedFeatures = () => {
                       <div className="font-handwriting text-xl md:text-2xl font-body text-slate-700">My Holiday Plan</div>
                    </div>
                    <div className="text-slate-300 opacity-50">
-                      <Clover className="w-8 h-8 md:w-10 md:h-10" />
+                      <Sprout className="w-8 h-8 md:w-10 md:h-10" />
                    </div>
                 </div>
 
@@ -568,7 +628,7 @@ const RefinedFeatures = () => {
                       <div className="w-5 h-5 md:w-6 md:h-6 border-2 border-red-300 rounded flex items-center justify-center shrink-0">
                          <X size={14} className="text-red-400" />
                       </div>
-                      <span className="font-bold text-slate-400 text-base md:text-lg line-through decoration-red-400 decoration-2">ログイン義務</span>
+                      <span className="font-body text-slate-400 text-base md:text-lg line-through decoration-red-400 decoration-2">ログイン義務</span>
                    </div>
                    
                    {/* Obligation: Crossed Out */}
@@ -576,7 +636,7 @@ const RefinedFeatures = () => {
                       <div className="w-5 h-5 md:w-6 md:h-6 border-2 border-red-300 rounded flex items-center justify-center shrink-0">
                          <X size={14} className="text-red-400" />
                       </div>
-                      <span className="font-bold text-slate-400 text-base md:text-lg line-through decoration-red-400 decoration-2">ノルマ達成</span>
+                      <span className="font-body text-slate-400 text-base md:text-lg line-through decoration-red-400 decoration-2">ノルマ達成</span>
                    </div>
 
                    {/* Freedom: Handwritten & Checked */}
@@ -584,7 +644,7 @@ const RefinedFeatures = () => {
                       <div className="w-7 h-7 md:w-8 md:h-8 bg-[#5fbb4e] rounded-full flex items-center justify-center shrink-0 shadow-sm">
                          <Check size={16} className="text-white" strokeWidth={4} />
                       </div>
-                      <span className="font-handwriting-jp text-2xl md:text-3xl text-slate-700 rotate-[-1deg]">
+                      <span className="font-handwriting-jp font-normal text-2xl md:text-3xl text-slate-600 rotate-[-1deg]">
                         気が向いたら遊ぶ
                       </span>
                    </div>
@@ -594,7 +654,7 @@ const RefinedFeatures = () => {
                       <div className="w-7 h-7 md:w-8 md:h-8 bg-[#5fbb4e] rounded-full flex items-center justify-center shrink-0 shadow-sm">
                          <Check size={16} className="text-white" strokeWidth={4} />
                       </div>
-                      <span className="font-handwriting-jp text-2xl md:text-3xl text-slate-700 rotate-[1deg]">
+                      <span className="font-handwriting-jp font-normal text-2xl md:text-3xl text-slate-600 rotate-[1deg]">
                         疲れたら休む
                       </span>
                    </div>
@@ -602,7 +662,7 @@ const RefinedFeatures = () => {
 
                 {/* Stamp */}
                 <div className="absolute bottom-6 right-6 transform -rotate-12 opacity-80 mix-blend-multiply">
-                   <div className="border-4 border-red-500 text-red-500 text-lg md:text-xl font-black px-2 py-1 md:px-4 md:py-2 rounded-lg tracking-widest uppercase mask-grunge">
+                   <div className="border-4 border-red-500 text-red-500 text-lg md:text-xl font-body px-2 py-1 md:px-4 md:py-2 rounded-lg tracking-widest uppercase mask-grunge">
                       APPROVED
                    </div>
                 </div>
@@ -635,7 +695,7 @@ const RefinedFeatures = () => {
               「グループ」は、共通の興味を持つ人たちのグループです。<br/>
               既存のグループに参加するのも、新しく立ち上げるのも自由。<br/><br/>
               建築ギルド、冒険パーティー、雑談コミュニティ。<br/>
-              <strong>同じ「好き」を持つ人たちが、自然に集まっています。</strong>
+              同じ「好き」を持つ人たちが、自然に集まっています。
             </p>
           </div>
           
@@ -653,7 +713,7 @@ const RefinedFeatures = () => {
                       <Castle size={22} className="md:w-7 md:h-7" />
                    </div>
                    <div className="text-white/90 font-bold text-center text-sm md:text-lg px-2 writing-vertical-rl h-[5.5rem] md:h-[6.5rem] tracking-widest opacity-80 group-hover:opacity-100">
-                      建築ギルド
+                      建築家
                    </div>
                 </div>
 
@@ -665,7 +725,7 @@ const RefinedFeatures = () => {
                       <Map size={22} className="md:w-7 md:h-7" />
                    </div>
                    <div className="text-white/90 font-bold text-center text-sm md:text-lg px-2 writing-vertical-rl h-[5.5rem] md:h-[6.5rem] tracking-widest opacity-80 group-hover:opacity-100">
-                      冒険者
+                      冒険ギルド
                    </div>
                    <div className="absolute -bottom-3 bg-yellow-400 text-yellow-900 text-[10px] font-bold px-2 py-0.5 rounded shadow-sm whitespace-nowrap">
                       Popular
@@ -696,7 +756,7 @@ const RefinedFeatures = () => {
         {/* --- METAPHOR 3: "Support" --- */}
         <div className="grid grid-cols-1">
           <Card className="bg-gradient-to-br from-white to-blue-50 !border-0 p-6 md:p-10 relative overflow-hidden transition-none hover:translate-y-0">
-             <div className="pointer-events-none absolute inset-0 rounded-3xl border-2 border-blue-200 opacity-0" />
+             <div className="absolute inset-0 rounded-3xl border-2 border-blue-200 opacity-0" />
              <div className="relative z-10 flex flex-col md:flex-row items-start gap-6 h-full">
                 <div className="w-12 h-12 md:w-14 md:h-14 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 border border-blue-200 shrink-0">
                   <Headset size={24} className="md:w-8 md:h-8" />
@@ -769,66 +829,6 @@ const RefinedFeatures = () => {
   );
 };
 
-const StoryCard = ({ author, text, avatarColor }) => (
-  <Card className="p-6 md:p-8 flex flex-col gap-4 relative overflow-hidden h-full">
-    <div className="absolute top-0 right-0 p-8 opacity-5">
-      <MessageCircle size={80} />
-    </div>
-    
-    <div className="flex items-center gap-4">
-      <div className={`w-12 h-12 md:w-14 md:h-14 rounded-full ${avatarColor} border-4 border-white shadow-sm flex items-center justify-center overflow-hidden shrink-0`}>
-        <span className="font-bold text-white text-lg md:text-xl">{author.charAt(0)}</span>
-      </div>
-      <div>
-        <div className="font-bold text-[#1e293b] text-base md:text-lg">{author}</div>
-      </div>
-    </div>
-    
-    <div className="relative">
-      <p className="font-body text-[#64748b] leading-relaxed italic text-sm md:text-base">
-        "{text}"
-      </p>
-    </div>
-  </Card>
-);
-
-const Stories = () => {
-  return (
-    <section id="reviews" className="py-20 md:py-24 bg-[#f8fafc] border-t border-[#e2e8f0]">
-      <div className="max-w-screen-xl mx-auto px-4 md:px-8">
-        <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-start mb-8 md:mb-16">
-          <div>
-            <h3 className="text-xs font-bold tracking-[0.2em] text-[#5fbb4e] uppercase mt-3 mb-2">Player Stories</h3>
-            <h2 className="font-display font-black text-3xl md:text-4xl lg:text-5xl text-[#1e293b] mt-3 -translate-x-[0.05em]">
-              参加者の声
-            </h2>
-            <p className="text-[#64748b] font-body text-base md:text-lg leading-relaxed mt-4 md:mt-6">
-              実際に参加している方々の感想です。<br/>
-              グループでの活動や日常の交流を通じて、<br/>
-              多くの繋がりが生まれています。
-            </p>
-          </div>
-          {/* Mobile: Vertical Stack, Desktop: Staggered Grid */}
-          <div className="flex flex-col gap-6">
-             <StoryCard 
-               author="ユーザーA" 
-               avatarColor="bg-blue-400"
-               text="すなわち出事は主義も待って始めう、また結構幸福う中止らを西洋の世界を出だろ簡潔で権力に下働きに云ってくれたためを、無論たまらなくたのん。"
-             />
-             <div className="md:translate-x-8">
-               <StoryCard 
-                 author="ユーザーB" 
-                 avatarColor="bg-orange-400"
-                 text="いわゆる反駁はどんな手本の目標というますはませ、彼らかの人人間の例というなたくないと内談ありているでて、はなはだ何は漠然たる上岡田さんとしてでたらめですのをできるた。"
-               />
-             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
 const CTA = ({ discordInviteProps, discordInviteDisabledClass }) => {
   return (
     <section id="join" className="py-16 md:py-24 px-4 overflow-hidden">
@@ -852,11 +852,11 @@ const CTA = ({ discordInviteProps, discordInviteDisabledClass }) => {
            </div>
 
            <div className="relative z-10">
-              <h3 className="text-xs font-bold tracking-[0.2em] text-[#5fbb4e] uppercase mt-3 mb-2">Join Us</h3>
+              {/* <h3 className="text-xs font-bold tracking-[0.2em] text-[#5fbb4e] uppercase mt-3 mb-2">Join Us</h3> */}
               <h2 className="font-display font-black text-3xl md:text-6xl text-white tracking-tight mt-3">
                 ここで、始めよう。
               </h2>
-              <p className="font-body text-slate-300 text-base md:text-xl max-w-2xl mx-auto leading-relaxed mt-4 md:mt-6">
+              <p className="font-normal text-slate-300 text-base md:text-xl max-w-2xl mx-auto leading-relaxed mt-4 md:mt-6">
                 200名以上が参加するコミュニティ。<br/>
                 参加に必要なのは、Discordアカウントだけです。
               </p>
@@ -1009,20 +1009,6 @@ export default function JoinLanding() {
       />
       {/* Styles for Custom Animations & Fonts */}
       <style>{`
-        :root {
-          --font-display: 'Outfit', sans-serif;
-          --font-body: 'M PLUS Rounded 1c', sans-serif;
-          --font-handwriting: 'Caveat', cursive;
-          --font-handwriting-jp: 'Zen Kurenaido', 'M PLUS Rounded 1c', sans-serif;
-          --font-polaroid-caption: 'Zen Kurenaido', 'M PLUS Rounded 1c', sans-serif;
-        }
-
-        .font-display { font-family: var(--font-display); }
-        .font-body { font-family: var(--font-body); }
-        .font-handwriting { font-family: var(--font-handwriting); }
-        .font-handwriting-jp { font-family: var(--font-handwriting-jp); }
-        .font-polaroid-caption { font-family: var(--font-polaroid-caption); }
-
         @keyframes blob {
           0% { transform: translate(0px, 0px) scale(1); }
           33% { transform: translate(30px, -50px) scale(1.1); }
@@ -1075,10 +1061,10 @@ export default function JoinLanding() {
         <section aria-label="Sample site notice" className="bg-white">
           <div className="max-w-screen-xl mx-auto px-4 md:px-8 pb-8">
             <div className="border-2 border-amber-300 bg-gradient-to-r from-amber-50 to-amber-100/70 text-amber-950 rounded-2xl px-6 py-5 text-sm md:text-base leading-relaxed shadow-md flex gap-3 items-start">
-              <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-amber-200 text-amber-900 text-sm font-black shrink-0" aria-hidden="true">
+              <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-amber-200 text-amber-900 text-sm font-bold shrink-0" aria-hidden="true">
                 !
               </span>
-              <p className="font-semibold">
+              <p className="font-bold">
                 このサイトはサンプルページです。実際の取引やサービス提供は行っていません。
               </p>
             </div>

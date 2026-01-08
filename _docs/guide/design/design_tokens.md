@@ -3,7 +3,7 @@ title: Design Tokens
 status: active
 draft_status: n/a
 created_at: 2025-12-07
-updated_at: 2025-12-14
+updated_at: 2026-01-08
 references:
   - ../../plan/Membership/roadmap/plan.md
   - ../../draft/design_request.md
@@ -14,7 +14,7 @@ references:
 **Concept: Friendly Functionalism（親しみやすい機能主義）**
 
 - **Tactile & Soft**: 物理的なフィードバック（Pushボタン）と柔らかな奥行き（Soft Shadow）で、デジタルながら手触りのある操作感を提供。
-- **Bold & Round**: 幾何学的な強さを持つ Outfit と、親しみやすい M PLUS Rounded 1c を組み合わせ、信頼感と安心感を両立。
+- **Clear & Durable**: モバイル/Windowsで崩れにくい Inter + Noto Sans JP を軸に、sans-serifへフォールバック。
 - **Vivid & Clean**: 鮮やかなブランドカラー（Clover Green / Discord Blue）を、清潔感のあるホワイトスペースと淡いスレートグレーで支える。
 
 ## 2. Color System
@@ -99,24 +99,22 @@ UIコンポーネントに適用するエイリアス。
 
 ### Font Family
 
-- **Display/Headings**: Outfit (700 Bold / 900 Black) - *Geometric, Friendly*
-  - Features: cv01 (Simple a), pnum (Proportional Numbers)
-- **Body/UI**: M PLUS Rounded 1c (400 Regular / 700 Bold) - *Soft, Readable*
-  - Features: palt (Proportional Metrics)
+- **Display/Headings / Body/UI**: `Inter` → `Noto Sans JP` → `sans-serif`
+- **Pricing Highlight (Plan name / Price)**: `Outfit` → `Noto Sans JP` → `sans-serif`（`font-outfit`）
 
 ### Scale & Properties
 
 | Token | Size (Mobile/Desktop) | Line Height | Tracking | Weight | Usage |
 |---|---|---:|---:|---:|---|
 | display | 2.5rem / 3.75rem | 1.1 | -0.02em | 900 | Hero H1 |
-| h1 | 2.0rem / 3.0rem | 1.2 | -0.01em | 700 | Section Title |
-| h2 | 1.5rem / 2.25rem | 1.3 | -0.01em | 700 | Card Title |
-| h3 | 1.25rem / 1.5rem | 1.4 | 0 | 700 | Subsections |
-| body-lg | 1.125rem | 1.6 | 0 | 400/700 | Lead Text |
-| body | 1.0rem | 1.6 | 0 | 400 | Default Text |
-| sm | 0.875rem | 1.5 | 0 | 400 | Meta / Footer |
+| h1 | 2.0rem / 3.0rem | 1.2 | -0.01em | 900 | Section Title |
+| h2 | 1.5rem / 2.25rem | 1.3 | -0.01em | 900 | Card Title |
+| h3 | 1.25rem / 1.5rem | 1.4 | 0 | 900 | Subsections |
+| body-lg | 1.125rem | 1.6 | 0 | 600/700/900 | Lead Text |
+| body | 1.0rem | 1.6 | 0 | 600 | Default Text |
+| sm | 0.875rem | 1.5 | 0 | 600 | Meta / Footer |
 | xs | 0.75rem | 1.4 | 0.02em | 700 | Tooltip / Label |
-| tag | 0.75rem | 1.0 | 0.08em | 800 | Uppercase Chips |
+| tag | 0.75rem | 1.0 | 0.08em | 700 | Uppercase Chips |
 
 ## 4. Spacing & Layout
 
@@ -226,8 +224,16 @@ module.exports = {
         }
       },
       fontFamily: {
-        display: ['Outfit', 'sans-serif'],
-        body: ['"M PLUS Rounded 1c"', 'sans-serif'],
+        display: [
+          'Inter',
+          '"Noto Sans JP"',
+          "sans-serif",
+        ],
+        body: [
+          'Inter',
+          '"Noto Sans JP"',
+          "sans-serif",
+        ],
       },
       boxShadow: {
         'soft': '0 4px 6px -1px rgba(0,0,0,0.05), 0 10px 15px -3px rgba(50,60,90,0.05), inset 0 1px 0 rgba(255,255,255,1)',

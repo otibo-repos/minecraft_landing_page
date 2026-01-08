@@ -64,18 +64,18 @@ const Header = ({
           className="flex items-baseline gap-2 group cursor-pointer text-left focus:outline-none"
           whileTap={{ scale: 0.98 }}
         >
-          <span className="text-lg md:text-xl font-extrabold tracking-tight brand-font text-slate-700 transition-colors duration-300 group-hover:text-[#5fbb4e]">
+          <span className="text-lg md:text-xl font-bold tracking-tight brand-font text-slate-700 transition-colors duration-300 group-hover:text-[#5fbb4e]">
             Minecraft Community <InteractiveSprout />
           </span>
           {isMembershipPage && (
-            <span className="text-[#5fbb4e] font-black text-xs uppercase tracking-wide hidden sm:inline-block bg-[#5fbb4e]/10 px-2 py-0.5 rounded-full border border-[#5fbb4e]/20 group-hover:bg-[#5fbb4e]/20 transition-colors">
+            <span className="text-[#5fbb4e] font-semibold text-xs uppercase tracking-wide hidden sm:inline-block bg-[#5fbb4e]/10 px-2 py-0.5 rounded-full border border-[#5fbb4e]/20 group-hover:bg-[#5fbb4e]/20 transition-colors">
               Supporters
             </span>
           )}
         </motion.button>
 
         {hasNav && navPosition === "center" && (
-          <div className="hidden md:flex items-center gap-8 text-sm font-bold text-slate-500 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-500 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             {navItems.map((item) => (
               <a
                 key={item.href}
@@ -90,7 +90,7 @@ const Header = ({
 
         <div className="flex items-center gap-5">
           {hasNav && navPosition === "right" && (
-            <div className="hidden md:flex items-center gap-8 text-sm font-bold text-slate-500">
+            <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-500">
               {navItems.map((item) => (
                 <a
                   key={item.href}
@@ -144,7 +144,7 @@ const Header = ({
                 className="w-8 h-8 rounded-full bg-white shadow-sm"
               />
               <div className="flex flex-col items-center text-center leading-none">
-                <span className="text-xs font-bold text-slate-700">
+                <span className="text-xs font-semibold text-slate-700">
                   {displayUser.name ?? "Unknown"}
                 </span>
               </div>
@@ -175,7 +175,7 @@ const Header = ({
                   <a
                     key={item.href}
                     href={item.href}
-                    className="text-slate-600 font-bold hover:text-[#5fbb4e] transition-colors w-full text-center"
+                    className="text-slate-600 font-semibold hover:text-[#5fbb4e] transition-colors w-full text-center"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.label}

@@ -202,10 +202,6 @@ const Membership = () => {
         type="website"
       />
       <style>{`
-        
-        body { font-family: 'M PLUS Rounded 1c', sans-serif; }
-        h1, h2, h3, .brand-font { font-family: 'Outfit', sans-serif; }
-        
         .soft-shadow {
           box-shadow: 
             0 4px 6px -1px rgba(0, 0, 0, 0.05),
@@ -283,7 +279,7 @@ const Membership = () => {
                 {checkoutStatus === "success" ? (
                   <a
                     href="https://discord.com/channels/@me"
-                    className="px-3 py-2 rounded-lg bg-emerald-600 text-white text-sm font-semibold shadow-sm hover:bg-emerald-700 transition-colors"
+                    className="px-3 py-2 rounded-lg bg-emerald-600 text-white text-sm font-bold shadow-sm hover:bg-emerald-700 transition-colors"
                   >
                     Discordを開く
                   </a>
@@ -293,14 +289,14 @@ const Membership = () => {
                       dismissCheckoutStatus();
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className="px-3 py-2 rounded-lg bg-white border text-sm font-semibold hover:bg-slate-50 transition-colors"
+                    className="px-3 py-2 rounded-lg bg-white border text-sm font-bold hover:bg-slate-50 transition-colors"
                   >
                     プランを再選択
                   </button>
                 )}
                 <button
                   onClick={dismissCheckoutStatus}
-                  className="px-3 py-2 rounded-lg bg-transparent border border-slate-200 text-sm font-semibold hover:bg-slate-50 transition-colors"
+                  className="px-3 py-2 rounded-lg bg-transparent border border-slate-200 text-sm font-bold hover:bg-slate-50 transition-colors"
                 >
                   閉じる
                 </button>
@@ -365,11 +361,11 @@ const Membership = () => {
                       transition: { duration: 0.8, ease: "easeOut" },
                     },
                   }}
-                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-snug drop-shadow-2xl tracking-tight"
+                  className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display text-white leading-snug drop-shadow-2xl tracking-tight"
                 >
-                  <span className="inline-block">いつもの場所を、</span>
+                  <span className="inline-block md:translate-x-[0.2em]">いつもの場所を、</span>
                   <br className="md:hidden" />
-                  <span className="text-[#5fbb4e] text-glow inline-block md:ml-4">
+                  <span className="text-[#5fbb4e] text-glow inline-block md:ml-4 md:translate-x-[0.2em]">
                     特別なものに。
                   </span>
                 </motion.h1>
@@ -383,7 +379,7 @@ const Membership = () => {
                       transition: { duration: 0.8, ease: "easeOut" },
                     },
                   }}
-                  className="text-sm md:text-base text-slate-100 font-bold leading-relaxed max-w-lg mx-auto drop-shadow-md"
+                  className="text-sm md:text-base text-slate-100 font-body leading-relaxed max-w-lg mx-auto drop-shadow-md"
                 >
                   サーバーの維持と進化を、一緒に支えませんか。
                   <br className="hidden md:inline" />
@@ -440,7 +436,7 @@ const Membership = () => {
               <br />
               <span className="text-[#5865F2]">あなたを示す。</span>
             </h2>
-            <p className="text-slate-600 font-medium leading-relaxed text-sm">
+            <p className="text-slate-600 font-body leading-relaxed text-sm">
               専用のカラーとロールで、コミュニティ内での存在感が変わります。
               <br />
               <br />
@@ -467,14 +463,14 @@ const Membership = () => {
         <section id="pricing" className="py-20 relative">
           <div className="container mx-auto px-4">
             <div className="flex flex-col items-center mb-12">
-              <span className="text-[#5fbb4e] font-black tracking-widest uppercase text-sm mb-3 block">
+              <span className="text-[#5fbb4e] font-bold tracking-widest uppercase text-sm mb-3 block">
                 Supporter Plans
               </span>
 
               <h2 className="text-3xl md:text-4xl font-black text-slate-800 mb-4 text-center">
                 支援の方法を選ぶ
               </h2>
-              <p className="text-slate-500 font-bold text-sm max-w-lg text-center leading-relaxed">
+              <p className="text-slate-500 font-body text-sm max-w-lg text-center leading-relaxed">
                 ライフスタイルに合わせて、3つのプランからお選びいただけます。<br/>
                 まずは1ヶ月プランで試してみませんか？
               </p>
@@ -486,7 +482,7 @@ const Membership = () => {
               />
             </div>
 
-            <div className="text-center mt-12 text-xs text-slate-400 font-medium max-w-lg mx-auto leading-relaxed">
+            <div className="text-center mt-12 text-xs text-slate-400 font-semibold max-w-lg mx-auto leading-relaxed">
               すべてのプランで同じ特典を提供します。適用期間及び更新方法が異なります。
               <br />
             </div>
@@ -506,14 +502,6 @@ const Membership = () => {
 
             <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
               <div className="flex-1 text-center md:text-left">
-                <div className="flex items-center justify-center md:justify-start gap-2 mb-3">
-                  <div className="p-2 bg-slate-100 rounded-xl text-slate-600 shadow-sm border border-slate-200/50">
-                    <Settings size={20} />
-                  </div>
-                  <span className="text-xs font-black text-slate-400 uppercase tracking-widest">
-                    Subscription
-                  </span>
-                </div>
                 <h3 className="text-2xl font-black text-slate-800 mb-3">
                   契約内容の確認・変更
                 </h3>
@@ -558,22 +546,6 @@ const Membership = () => {
                       </span>
                     ) : "ログインが必要です"}
                   </div>
-                  
-                  {user ? (
-                    <button 
-                      onClick={handleLogout}
-                      className="text-[10px] font-bold text-slate-400 hover:text-red-500 transition-colors flex items-center gap-1 px-1"
-                    >
-                      <LogOut size={10} /> ログアウト
-                    </button>
-                  ) : (
-                    <button 
-                      onClick={beginDiscordLogin}
-                      className="text-[10px] font-bold text-[#5865F2] hover:text-[#4752C4] transition-colors flex items-center gap-1 px-1"
-                    >
-                      <Users size={10} /> ログインする
-                    </button>
-                  )}
                 </div>
               </div>
             </div>

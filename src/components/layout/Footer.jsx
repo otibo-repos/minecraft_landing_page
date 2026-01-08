@@ -14,14 +14,14 @@ const Footer = ({ onScrollTop }) => {
               Minecraft Community <InteractiveSprout />
             </a>
         </div>
-      <div className="flex justify-center gap-4 md:gap-6 text-xs md:text-sm font-bold text-slate-400 flex-wrap">
+      <div className="flex justify-center gap-4 md:gap-6 text-xs md:text-sm font-semibold text-slate-400 flex-wrap">
         <FooterLink href="/help">ヘルプ / FAQ</FooterLink>
         <FooterLink href="/legal">利用規約</FooterLink>
         <FooterLink href="/legal">プライバシーポリシー</FooterLink>
         <FooterLink href="/legal">特定商取引法に基づく表記</FooterLink>
         <FooterLink href="/membership">メンバーシップページ</FooterLink>
       </div>
-      <div className="text-xs text-slate-300 font-bold">
+      <div className="text-xs text-slate-300 font-semibold">
         &copy; 2025-2026 Minecraft Community 🌱 Not affiliated with Mojang or Microsoft.
       </div>
       </div>

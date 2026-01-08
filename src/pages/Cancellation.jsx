@@ -17,7 +17,7 @@ import Seo from "../components/Seo";
 const FALLBACK_AVATAR =
   "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f464.svg";
 
-// Raindrop Animation for background
+// 背景の雨アニメーション
 const Raindrop = ({ delay, x }) => (
   <motion.div
     initial={{ y: -20, opacity: 0 }}
@@ -59,7 +59,7 @@ export default function CancellationSuccessPage() {
 
   const isLoggedIn = !!(user && user.id);
 
-  // Portfolio: bypass access gate for /cancellation.
+  // ポートフォリオとして公開する用のバイパス
   /*
   useEffect(() => {
     if (!isLoggedIn) {
@@ -149,11 +149,6 @@ export default function CancellationSuccessPage() {
         path="/cancellation"
         type="website"
       />
-      <style>{`
-        .font-display { font-family: 'Outfit', sans-serif; }
-        .font-body { font-family: 'M PLUS Rounded 1c', sans-serif; }
-      `}</style>
-
       {/* Subtle Rain Animation (Melancholic but calm) */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 opacity-30">
         {[...Array(15)].map((_, i) => (
@@ -188,14 +183,14 @@ export default function CancellationSuccessPage() {
             </motion.div>
 
             <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
-              <h1 className="font-display text-2xl md:text-3xl font-bold text-slate-800 mb-3">
+              <h1 className="font-display text-2xl md:text-3xl font-black text-slate-800 mb-3">
                 {status === "not-logged-in"
                   ? "ログインが必要です"
                   : status === "not-cancelled"
                   ? "解約情報はありません"
                   : "情報の取得に失敗しました"}
               </h1>
-              <p className="font-body text-slate-500 font-bold text-sm md:text-base leading-relaxed mb-6">
+              <p className="font-body text-slate-500 font-semibold text-sm md:text-base leading-relaxed mb-6">
                 {status === "not-logged-in"
                   ? "解約情報の確認にはログインが必要です。"
                   : status === "not-cancelled"
@@ -261,7 +256,7 @@ export default function CancellationSuccessPage() {
             <h1 className="font-display text-4xl md:text-5xl font-black text-slate-800 mb-4 tracking-tight">
               またお待ちしております
             </h1>
-            <p className="font-body text-slate-500 font-bold text-sm md:text-base leading-relaxed max-w-sm mx-auto">
+            <p className="font-body text-slate-500 font-semibold text-sm md:text-base leading-relaxed max-w-sm mx-auto">
               解約手続きが完了しました。<br/>
               これまでご支援いただき、<br/>
               本当にありがとうございました。
@@ -282,7 +277,7 @@ export default function CancellationSuccessPage() {
               <div className="p-6 md:p-8">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
                   <div>
-                    <h3 className="font-display font-bold text-lg text-slate-700">
+                    <h3 className="font-display font-black text-lg text-slate-700">
                       {planName}
                     </h3>
                     <div className="flex items-center gap-2 mt-1">

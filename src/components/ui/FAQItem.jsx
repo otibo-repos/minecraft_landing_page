@@ -11,7 +11,7 @@ const FAQItem = ({ q, a }) => {
       <motion.button
         whileHover={{ backgroundColor: "rgba(248, 250, 252, 1)" }}
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-4 text-left font-bold text-slate-700 hover:bg-slate-50 transition-colors"
+        className="w-full flex items-center justify-between p-4 text-left font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
         aria-expanded={isOpen}
         aria-controls={contentId}
         type="button"
@@ -30,7 +30,7 @@ const FAQItem = ({ q, a }) => {
         transition={{ duration: 0.25, ease: "easeInOut" }}
         className="border-t border-slate-50 bg-slate-50/50 overflow-hidden"
       >
-        <div className="p-4 text-sm font-medium text-slate-500 leading-relaxed">{a}</div>
+        <div className="p-4 text-sm font-semibold text-slate-500 leading-relaxed">{a}</div>
       </motion.div>
     </div>
   );

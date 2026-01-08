@@ -1,7 +1,7 @@
 # Project Task Management Rules
 
 ## 0. System Metadata
-- **Current Max ID**: `Next ID No: 23` (※タスク追加時にインクリメント必須)
+- **Current Max ID**: `Next ID No: 25` (※タスク追加時にインクリメント必須)
 - **ID Source of Truth**: このファイルの `Next ID No` 行が、全プロジェクトにおける唯一のID発番元である。
 
 ## 1. Task Lifecycle (State Machine)
@@ -188,19 +188,6 @@ ID生成およびタイトルのプレフィックスには以下のみを使用
 ---
 
 ## Backlog
-- **Title**: [Enhance] 見出しの光学左揃え補正を適用
-- **ID**: UI-Enhance-23
-- **Priority**: P2
-- **Size**: XS
-- **Area**: UI
-- **Dependencies**: []
-- **Goal**: `Membership.jsx`/`JoinLanding.jsx`/`Checkout.jsx` の指定見出しが本文の左端に視覚的に揃っている。
-- **Steps**:
-  1. [ ] 対象の見出し要素と本文要素の現状クラスを確認する
-  2. [ ] 見出しごとの差分に応じた左方向の補正（margin/translate など）を追加する
-  3. [ ] 画面表示で本文との左揃えが改善していることを確認する
-- **Description**: 見出しの文字ごとの差による視覚的な左ズレを個別に補正する。
-- **Plan**: None
 
 ---
 
@@ -209,3 +196,17 @@ ID生成およびタイトルのプレフィックスには以下のみを使用
 ---
 
 ## In Progress
+
+- **Title**: [Enhance] Balance typography weights across all pages
+- **ID**: UI-Enhance-24
+- **Priority**: P1
+- **Size**: M
+- **Area**: UI
+- **Dependencies**: []
+- **Goal**: 全ページでRegular/Semi Bold/Boldの役割分担が明確になり、本文はRegular、UIラベルはSemi Bold、見出しはBold以上で統一されている。
+- **Steps**:
+  1. [ ] Planの "Tasks" に従い現状棚卸しとウェイト方針を整理
+  2. [ ] Planの "Tasks" に従いフォント読み込みとコンポーネント修正を実施
+  3. [ ] Planの "Test Plan" に従い主要ページを目視確認
+- **Description**: Regular寄りの見え方が全ページで続いている問題を修正し、Design Tokensに沿ったウェイト設計へ揃える。
+- **Plan**: `_docs/plan/UI/typography-weight/plan.md`

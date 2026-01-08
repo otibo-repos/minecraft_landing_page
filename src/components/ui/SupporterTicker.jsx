@@ -73,7 +73,7 @@ const SupporterTicker = ({ showLabel = true }) => {
     <div className="flex flex-col gap-4">
       {showLabel && (
         <div className="container mx-auto px-4">
-          <p className="text-center text-sm font-bold text-slate-400 tracking-wider uppercase flex items-center justify-center gap-2">
+          <p className="text-center text-sm font-semibold text-slate-400 tracking-wider uppercase flex items-center justify-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
             最近加入したメンバー
             <span className="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
@@ -97,7 +97,7 @@ const SupporterTicker = ({ showLabel = true }) => {
               }}
               className="flex items-center gap-4 bg-white/60 backdrop-blur-sm border border-slate-200 px-6 py-3 rounded-full shadow-sm whitespace-nowrap min-w-[400px] cursor-default transition-colors"
             >
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center text-slate-400 font-bold text-sm shrink-0 overflow-hidden">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center text-slate-400 font-semibold text-sm shrink-0 overflow-hidden">
                 {s.avatar ? (
                   <img
                     src={s.avatar}
@@ -109,9 +109,9 @@ const SupporterTicker = ({ showLabel = true }) => {
                   s.name[0]
                 )}
               </div>
-              <div className="text-base font-bold text-slate-700">{s.name}</div>
+              <div className="text-base font-semibold text-slate-700">{s.name}</div>
               <div
-                className={`text-[10px] font-bold uppercase px-2 py-1 rounded border ${getPlanStyle(
+                className={`text-[10px] font-semibold uppercase px-2 py-1 rounded border ${getPlanStyle(
                   s.plan
                 )}`}
               >
@@ -119,7 +119,7 @@ const SupporterTicker = ({ showLabel = true }) => {
               </div>
               <div className="flex-1" />
               {s.joinedAt && (
-                <div className="text-[10px] font-bold text-slate-400">
+                <div className="text-[10px] font-semibold text-slate-400">
                   {formatJoinedDate(s.joinedAt)}
                 </div>
               )}

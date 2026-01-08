@@ -3,7 +3,7 @@ title: Google Fonts Non-Blocking Load Survey for LP
 status: active
 draft_status: n/a
 created_at: 2025-12-23
-updated_at: 2025-12-23
+updated_at: 2026-01-08
 references: ["perf_insight.md"]
 related_issues: []
 related_prs: []
@@ -30,3 +30,7 @@ LPの初期描画を阻害しないフォント読み込み方式に切り替え
 ## Recommended Actions
 - `index.html`のGoogle Fonts読み込みを非ブロッキング化する。
 - 変更後にLighthouseで「レンダリングをブロックしているリソース」の改善を確認する。
+
+## Update (2026-01-08)
+- ベースフォントを`Inter` + `Noto Sans JP`のGoogle Fonts読み込みに変更し、`index.html`で非ブロッキング読み込みを維持。
+- LP固有フォント（Caveat / Zen Kurenaido）は`JoinLanding.jsx`の動的読み込みを継続。

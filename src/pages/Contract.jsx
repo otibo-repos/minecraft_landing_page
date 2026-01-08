@@ -55,7 +55,7 @@ export const CheckboxCard = ({
             {title}
           </h4>
           {tag && (
-            <span className="text-[10px] font-black bg-[#5fbb4e]/10 text-[#5fbb4e] px-2 py-0.5 rounded-full uppercase tracking-wider">
+            <span className="text-[10px] font-bold bg-[#5fbb4e]/10 text-[#5fbb4e] px-2 py-0.5 rounded-full uppercase tracking-wider">
               {tag}
             </span>
           )}
@@ -290,10 +290,6 @@ export default function Contract() {
         type="website"
       />
       <style>{`
-        /* Align fonts with membership page */
-        body { font-family: 'M PLUS Rounded 1c', sans-serif; }
-        h1, h2, h3, .brand-font, .font-display { font-family: 'Outfit', sans-serif; }
-        .font-body { font-family: 'M PLUS Rounded 1c', sans-serif; }
         .btn-push:active { transform: translateY(4px); box-shadow: none !important; }
       `}</style>
 
@@ -331,10 +327,10 @@ export default function Contract() {
             {/* Right Col: Agreements & Action */}
             <div className="lg:col-span-7 order-1 lg:order-2 space-y-8">
               <motion.div variants={itemVariants} className="mb-2 text-left">
-                <h1 className="font-display text-3xl md:text-4xl font-bold text-slate-900 mb-2 -translate-x-[0.04em]">
+                <h1 className="font-display text-3xl md:text-4xl font-black text-slate-900 mb-2 -translate-x-[0.04em]">
                   サポート内容の確認
                 </h1>
-                <p className="font-body text-slate-500 font-bold">
+                <p className="font-body text-slate-500 font-semibold">
                   決済前の最終確認です。この段階では請求は発生しません。
                 </p>
               </motion.div>
@@ -498,7 +494,7 @@ export default function Contract() {
                <div className="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
                  <AlertCircle size={32} />
                </div>
-               <h3 className="font-display font-bold text-xl text-slate-800 mb-2">エラー</h3>
+               <h3 className="font-display font-black text-xl text-slate-800 mb-2">エラー</h3>
                <p className="font-body text-slate-600 mb-6">{error}</p>
                <button 
                  onClick={() => setError(null)}

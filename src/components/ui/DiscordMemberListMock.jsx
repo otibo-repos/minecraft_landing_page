@@ -126,7 +126,7 @@ const DiscordMemberListMock = ({ user }) => {
             </div>
         </div>
         <div className="relative">
-            <span className="text-[#f2f3f5] font-bold text-sm block relative z-10">
+            <span className="text-[#f2f3f5] font-semibold text-sm block relative z-10">
                 supporters-chat
             </span>
             <motion.div
@@ -148,7 +148,7 @@ const DiscordMemberListMock = ({ user }) => {
     </div>
 
     <div className="p-4 bg-[#313338]">
-      <div className="text-[#949ba4] text-xs font-bold uppercase tracking-wide mb-3 px-1 hover:text-[#dbdee1] transition-colors cursor-default">
+      <div className="text-[#949ba4] text-xs font-semibold uppercase tracking-wide mb-3 px-1 hover:text-[#dbdee1] transition-colors cursor-default">
         Supporters — 1
       </div>
 
@@ -182,7 +182,7 @@ const DiscordMemberListMock = ({ user }) => {
           </div>
         </div>
         <div className="relative z-10">
-          <div className="text-[#5fbb4e] font-medium text-base flex items-center gap-1.5">
+          <div className="text-[#5fbb4e] font-semibold text-base flex items-center gap-1.5">
             {user?.name ?? "Guest"}
             <Crown
               size={14}
@@ -194,7 +194,7 @@ const DiscordMemberListMock = ({ user }) => {
       </motion.div>
 
       <div className="mt-6 opacity-50">
-        <div className="text-[#949ba4] text-xs font-bold uppercase tracking-wide mb-3 px-1">
+        <div className="text-[#949ba4] text-xs font-semibold uppercase tracking-wide mb-3 px-1">
           Members — 3
         </div>
         {["Steve", "Alex", "Zombie"].map((name, i) => (
@@ -202,11 +202,11 @@ const DiscordMemberListMock = ({ user }) => {
             key={i}
             className="flex items-center gap-4 p-2 rounded opacity-50 grayscale-[0.5]"
           >
-            <div className="w-10 h-10 rounded-full bg-[#5865f2] flex items-center justify-center text-white text-sm font-bold">
+            <div className="w-10 h-10 rounded-full bg-[#5865f2] flex items-center justify-center text-white text-sm font-semibold">
               {name[0]}
             </div>
             <div>
-              <div className="text-[#dbdee1] text-base font-medium">{name}</div>
+              <div className="text-[#dbdee1] text-base font-semibold">{name}</div>
             </div>
           </div>
         ))}
