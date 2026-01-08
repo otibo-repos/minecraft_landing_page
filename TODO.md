@@ -1,7 +1,7 @@
 # Project Task Management Rules
 
 ## 0. System Metadata
-- **Current Max ID**: `Next ID No: 29` (※タスク追加時にインクリメント必須)
+- **Current Max ID**: `Next ID No: 30` (※タスク追加時にインクリメント必須)
 - **ID Source of Truth**: このファイルの `Next ID No` 行が、全プロジェクトにおける唯一のID発番元である。
 
 ## 1. Task Lifecycle (State Machine)
@@ -182,12 +182,25 @@ ID生成およびタイトルのプレフィックスには以下のみを使用
 ## Inbox
 - テスト拡充
 - ドキュメント更新
-- micro interactions のプロジェクト内トークン統一
 - ヘルプページ作成
 
 ---
 
 ## Backlog
+
+- **Title**: [Enhance] JoinLanding scroll/load animations parity
+- **ID**: UI-Enhance-29
+- **Priority**: P2
+- **Size**: M
+- **Area**: UI
+- **Dependencies**: []
+- **Goal**: JoinLandingでスクロール/読み込みに応じたアニメーションが適用され、Membershipと同等の視覚的な動きが提供される。
+- **Steps**:
+  1. [ ] Planの"Scope"に沿ってJoinLandingの対象セクションと適用パターンを確定する
+  2. [ ] Planの"Tasks"に従ってmotion/viewport設定とアニメーション定義を追加する
+  3. [ ] Planの"Test Plan"に従い表示確認を行う
+- **Description**: JoinLandingにMembership相当の読み込み/スクロールアニメーションを導入し、体験の一貫性を高める。
+- **Plan**: `_docs/plan/UI/join-landing-animations/plan.md`
 
 ---
 
@@ -196,18 +209,3 @@ ID生成およびタイトルのプレフィックスには以下のみを使用
 ---
 
 ## In Progress
-
-- **Title**: [Refactor] Unify design tokens usage across UI
-- **ID**: UI-Refactor-26
-- **Priority**: P1
-- **Size**: S
-- **Area**: UI
-- **Dependencies**: []
-- **Goal**: `src/styles.css` のトークンを基準に、主要ページの色・影・フォント指定が統一されている。
-- **Steps**:
-  1. [x] `_docs/guide/design/design_tokens.md` と `src/styles.css` のトークンを棚卸し
-  2. [x] 直書き色の多いページ（`JoinLanding`, `Supporters`, `Membership`, `Contract`, `Thanks` など）を対象に置換方針を決定
-  3. [x] CSS変数 or Tailwind theme のいずれかに寄せて置換を実施
-  4. [ ] 主要ページの視認性と差分を確認し、必要なら微調整
-- **Description**: デザイントークンの分散定義と直書きを整理して一貫性を高める。参照: `_docs/guide/design/design_tokens.md`, `_docs/draft/UI/design-token-unification.md`, `src/styles.css`。Open questions: CSS変数ベースか Tailwind theme 拡張か、対象ページ範囲の優先順位。
-- **Plan**: None
